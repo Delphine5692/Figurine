@@ -12,5 +12,7 @@
             "email": "delphine4492@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

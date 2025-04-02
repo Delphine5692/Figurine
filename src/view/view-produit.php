@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Produits</title>
+    <link rel="stylesheet" href="/Figurine/public/css/style.css">
 </head>
 
 <body>
@@ -18,12 +19,12 @@
                     <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
                     <!-- nl2br pour faire un saut à la ligne -->
                     <p>Description : <?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
-                    <img src="<?php echo htmlspecialchars($produit['image_1']); ?>" alt="Image 1 du produit" />
+                    <img class="image-produit" src="/Figurine/public/images/<?php echo htmlspecialchars($produit['image_1']); ?>" alt="Image 1 du produit">
                     <img src="<?php echo htmlspecialchars($produit['image_2']); ?>" alt="Image 2 du produit" />
                     <img src="<?php echo htmlspecialchars($produit['image_3']); ?>" alt="Image 3 du produit" />
                     <p>Prix : <?php echo htmlspecialchars($produit['prix']); ?> €</p>
                     <p>Taille : <?php echo htmlspecialchars($produit['taille']); ?> cm</p>
-                    <p><strong>Date de publication :</strong> <?php echo $produit['date_poduit']; ?></p>
+                    <p><strong>Date de publication :</strong> <?php echo $produit['date_produit']; ?></p>
                 </li>
             <?php endforeach; ?>
         </ul>

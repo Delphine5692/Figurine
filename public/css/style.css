@@ -54,3 +54,8 @@ main {
     max-width: 100%;
     height: auto;
 }
+
+.image-produit {
+    width: 200px;
+    height: auto;
+}

@@ -11,6 +11,11 @@ class ArticleController
 
         $articles = Article::getAllArticles();
 
+        if ($articles === null) {
+            header('Location: /view-article.php');
+            exit();
+        }
+
         // Inclure la vue et passer les articles
         require_once 'src/view/view-article.php';
     }

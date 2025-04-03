@@ -1,9 +1,5 @@
 <?php
 
-// public function = définition d'une fonction sur une instance d'un objet, qui aura accès à $this, et aux valeurs des variables d'instance, ET aux variables statiques.
-
-// public static function = définition d'une fonction sur une classe, qui n'aura pas accès à $this, ni aux valeurs des variables d'instance, mais qui aura toujours accès aux variables statiques.
-
 namespace Figurine\Model;
 
 use Figurine\Lib\DbConnector;
@@ -16,34 +12,17 @@ class Produit
     {
         try {       // protection de la zone de code où une erreur est possible
             // récupération du connecteur de base en sollicitant la classe singleton
-            $db=DbConnector::dbConnect();
+            $db = DbConnector::dbConnect();
 
             $query = 'SELECT * FROM PRODUIT';
             $stmt = $db->prepare($query);   // prepare, évite les injections sql
             $stmt->execute();
-            //$produits = [];
 
             // fetchAll va chercher les infos (c'est à TOUS les produits) dans la base de données
             $produits = $stmt->fetchAll();
             // $produits contient maintenant un tableau de tableaux ; c'est à dire un tableau des produits
             // sachant que chaque produit est lui-même un tableau associatif.
             // On verra son exploitation dans la partie "vue".
-
-            /*----
-            while ($row = $stmt->fetch()) {
-                $produits[] = new Produit(
-                    $row['id_produit'],
-                    $row['nom'],
-                    $row['prix'],
-                    $row['description'],
-                    $row['taille'],
-                    $row['image_1'],
-                    $row['image_2'],
-                    $row['image_3'],
-                    $row['date_produit'],
-                );
-            }
-            ----*/
 
             return $produits;
         }       // fin de la partie protégée (les accès à la base sont terminés... pour le moment !)

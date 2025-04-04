@@ -30,6 +30,8 @@ class ArticleController
             exit();
         }
 
+        $commentaires = Article::getCommentairesByArticle($id);
+
         require_once 'src/view/view-article-detail.php'; // Vue détaillée pour afficher l'article
     }
 

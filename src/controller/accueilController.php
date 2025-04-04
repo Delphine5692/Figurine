@@ -2,12 +2,16 @@
 
 namespace Figurine\Controller;
 
-use Figurine\model\Accueil;
+use Figurine\Model\Produit;
+use Figurine\Model\Article;
 
 class AccueilController
 {
     public function afficherAccueil()
     {
+
+        $articles = Article::getAllArticles();
+        $produits = Produit::getAllProduits();
 
         // $articles = Article::getAllArticles();
 

@@ -2,33 +2,51 @@
 // Démarrage de la session
 session_start();
 
-// utilisation de Dotenv
 require 'vendor/autoload.php';
+
+// Utilisation de Dotenv
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-
-use Figurine\Lib\DbConnector;
+use Figurine\Controller\Router;
+use Figurine\Controller\AccueilController;
 use Figurine\Controller\ProduitController;
 use Figurine\Controller\ArticleController;
 
 
-use Figurine\Controller\Router;
-use Figurine\Controller\AccueilController;
+// On récupère l'URL dans l'URL (ou '/' si vide)
+$url = $_GET['url'] ?? '/';
 
-$url = __DIR__ . "/";
+$router = new Router($url);
 
-$router = new Router('/');
-// Ajouter une route pour la page d'accueil (méthode GET)
-// $router->get('/', function() { 
-//     echo "Bienvenue sur ma homepage !"; 
-// });
-
-// $router->get('/accueil', "AccueilController@afficherAccueil");
+// Page d'accueil
 $router->get('/', function () {
     $controller = new AccueilController();
     $controller->afficherAccueil();
 });
-// $router->get('/', function($id){ echo "Bienvenue sur ma homepage !"; }); 
-// $router->get('/posts/:id', function($id){ echo "Voila l'article $id"; }); 
+
+// Page des produits
+$router->get('/produits', function () {
+    $controller = new ProduitController();
+    $controller->afficherProduits(); // méthode à créer dans ton contrôleur Produit
+});
+
+// Page d’un produit avec paramètre (id)
+$router->get('/produits/:id', function ($id) {
+    $controller = new ProduitController();
+    $controller->afficherProduits($id); // méthode à créer
+});
+
+// Page des articles
+$router->get('/articles', function () {
+    $controller = new ArticleController();
+    $controller->afficherArticles();
+});
+
+// Page d’un article avec slug et id (ex: /articles/mon-article-42)
+$router->get('/articles/:slug-:id', function ($slug, $id) {
+    $controller = new ArticleController();
+    $controller->afficherArticles($slug, $id);
+});
+
 $router->run();

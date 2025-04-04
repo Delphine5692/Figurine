@@ -50,8 +50,16 @@ class Router
                 return $route->call();
             }
         }
-        throw new Exception('No matching routes');
+        // throw new Exception('No matching routes');
+        $this->afficher404();
     }
+
+    private function afficher404()
+    {
+        http_response_code(404);
+        require_once 'src/view/view-404.php';
+    }
+
 
     public function url($name, $params = [])
     {

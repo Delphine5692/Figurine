@@ -13,14 +13,15 @@ class AccueilController
         $articles = Article::getAllArticles();
         $produits = Produit::getAllProduits();
 
-        // $articles = Article::getAllArticles();
+        // Récupérer les 3 derniers articles triés par date de publication
+        $articles = Article::getLastThreeArticles();
 
-        // if ($articles === null) {
-        //     header('Location: /view-article.php');
-        //     exit();
-        // }
+        if ($articles === null) {
+            header('Location: /view-404.php'); // Si aucun article n'est trouvé
+            exit();
+        }
 
-        // Inclure la vue et passer les articles
+
         require_once 'src/view/view-accueil.php';
     }
 }

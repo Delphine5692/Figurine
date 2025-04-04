@@ -43,10 +43,11 @@ $router->get('/articles', function () {
     $controller->afficherArticles();
 });
 
-// Page d’un article avec slug et id (ex: /articles/mon-article-42)
-$router->get('/articles/:slug-:id', function ($slug, $id) {
+// Route pour afficher un article spécifique par ID
+$router->get('/article/:id', function ($id) {
     $controller = new ArticleController();
-    $controller->afficherArticles($slug, $id);
+    $controller->afficherArticle($id);
 });
+
 
 $router->run();

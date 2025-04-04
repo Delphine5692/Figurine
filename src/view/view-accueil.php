@@ -12,10 +12,30 @@
 <body>
     <h1>Bienvenue sur le site de figurines</h1>
     <p>Découvrez nos figurines imprimées en 3D et peintes à la main.</p>
+
+    <h2>Nos derniers articles</h2>
+
+    <?php if (count($articles) > 0): ?>
+    <div class="articles">
+        <?php foreach ($articles as $article): ?>
+            <div class="article">
+                <img class="image-article" src="public/images/<?php echo htmlspecialchars($article['image']); ?>" alt="Image de l'article">
+                <h3><?php echo htmlspecialchars($article['titre']); ?></h3>
+                <p><?php echo nl2br(htmlspecialchars(substr($article['description'], 0, 150))); ?>...</p> <!-- Affiche les 150 premiers caractères de la description -->
+                <a href="index.php?url=article/<?php echo $article['id_article']; ?>" class="btn">Voir plus</a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <a href="index.php?url=articles" class="btn">Voir les autres articles</a>
+<?php else: ?>
+    <p>Aucun article disponible pour le moment.</p>
+<?php endif; ?>
+
+
     <nav>
         <ul>
             <li><a href="index.php?url=produits">Voir les produits</a></li>
-            <li><a href="index.php?url=articles">Voir les articles</a></li>
         </ul>
     </nav>
 </body>

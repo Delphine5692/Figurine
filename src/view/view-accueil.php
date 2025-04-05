@@ -22,7 +22,7 @@ session_start();
 
         <?php if (isset($_SESSION['id_utilisateur'])): ?>
             <li>Bienvenue, <?php echo htmlspecialchars($_SESSION['nom']); ?> !</li>
-            <li><a href="deconnexion.php">Se déconnecter</a></li>
+            <li><a href="index.php?url=logout">Se déconnecter</a></li>
         <?php else: ?>
             <li><a href="index.php?url=login">Connexion</a></li>
             <li><a href="index.php?url=inscription">Inscription</a></li>

@@ -12,35 +12,26 @@ class UtilisateurController
         $mail = $_POST['mail'];
         $mdp = $_POST['mdp'];
 
-        try {
-            // Connexion à la BDD
-            $pdo = DbConnector::dbConnect(); // Utilisation de ta méthode DbConnector
+        $utilisateurModel = new \Figurine\Model\Utilisateur();
 
-            // Vérifier si l'utilisateur existe
-            $stmt = $pdo->prepare("SELECT * FROM UTILISATEUR WHERE mail = ?");
-            $stmt->execute([$mail]);
-            $utilisateur = $stmt->fetch();
+        $utilisateur = $utilisateurModel->verifierConnexion($mail, $mdp);
 
-            if ($utilisateur && password_verify($mdp, $utilisateur['mdp'])) {
-                // Connexion réussie
-                session_start();
-                $_SESSION['id_utilisateur'] = $utilisateur['id_utilisateur'];
-                $_SESSION['nom'] = $utilisateur['nom'];
+        if ($utilisateur) {
+            // Connexion réussie
+            session_start();
+            $_SESSION['id_utilisateur'] = $utilisateur['id_utilisateur'];
+            $_SESSION['nom'] = $utilisateur['nom'];
 
-                // Rediriger vers la page d'accueil
-                header('Location: index.php');
-                exit;
-            } else {
-                echo "Identifiants incorrects.";
-            }
-        } catch (\PDOException $e) {
-            echo "Erreur de connexion : " . $e->getMessage();
+            // Rediriger vers la page d'accueil
+            header('Location: /web/Figurine/index.php');
+            exit;
+        } else {
+            echo "Identifiants incorrects.";
         }
     } else {
         echo "Veuillez remplir tous les champs.";
     }
 }
-
 
 
     public function inscription()

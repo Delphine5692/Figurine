@@ -16,11 +16,11 @@ class Utilisateur
     public function verifierConnexion($mail, $mdp)
     {
         $sql = "SELECT * FROM UTILISATEUR WHERE mail = ?";
-        $stmt = $this->db->prepare($sql); 
+        $stmt = $this->db->prepare($sql);
         $stmt->execute([$mail]);
         $utilisateur = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if ($utilisateur && $utilisateur['mdp'] === $mdp) {
+        if ($utilisateur && password_verify($mdp, $utilisateur['mdp'])) {
             return $utilisateur;
         }
 

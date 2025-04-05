@@ -31,15 +31,16 @@
     <?php endif; ?>
 
     <!-- Formulaire pour ajouter un commentaire -->
-    <?php if (isset($_SESSION['id_utilisateur'])): ?>
-        <h3>Ajouter un commentaire</h3>
-        <form action="index.php?url=commentaire&id_article=<?php echo $article['id_article']; ?>" method="post">
-            <textarea name="msg_blog" rows="4" cols="50" placeholder="Votre commentaire"></textarea><br>
-            <button type="submit">Poster le commentaire</button>
-        </form>
-    <?php else: ?>
-        <p>Vous devez être connecté pour laisser un commentaire.</p>
-    <?php endif; ?>
+<?php if (isset($_SESSION['id_utilisateur'])): ?>
+    <h3>Ajouter un commentaire</h3>
+    <form action="index.php?url=commentaire" method="post">
+        <input type="hidden" name="id_article" value="<?= htmlspecialchars($article['id_article']); ?>">
+        <textarea name="msg_blog" rows="4" cols="50" placeholder="Votre commentaire"></textarea><br>
+        <button type="submit">Poster le commentaire</button>
+    </form>
+<?php else: ?>
+    <p>Vous devez être connecté pour laisser un commentaire.</p>
+<?php endif; ?>
 
 
     <!-- Ajouter un bouton pour revenir à la liste des articles -->

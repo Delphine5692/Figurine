@@ -15,10 +15,6 @@ use Figurine\Controller\ArticleController;
 use Figurine\Controller\CommentaireController;
 use Figurine\Controller\UtilisateurController;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // On récupère l'URL dans l'URL (ou '/' si vide)
 $url = $_GET['url'] ?? '/';
 
@@ -56,8 +52,8 @@ $router->get('/article/:id', function ($id) {
 });
 
 // Route pour ajouter un commentaire
-$router->post('/commentaire/ajouter', function () {
-    $controller = new CommentaireController();
+$router->post('/commentaire', function () {
+    $controller = new \Figurine\Controller\CommentaireController();
     $controller->ajouterCommentaire();
 });
 
@@ -72,19 +68,20 @@ $router->get('/login', function () {
 });
 
 $router->post('/login', function () {
-    $controller = new UtilisateurController();
+    $controller = new \Figurine\Controller\UtilisateurController();
     $controller->connexion();
 });
 
 $router->get('/logout', function () {
     session_start();
     session_destroy();
-    header('Location: /');
+    header('Location: /web/Figurine/index.php');
+    exit;
 });
 
 
 $router->get('/inscription', function () {
-    $controller = new UtilisateurController();
+    $controller = new \Figurine\Controller\UtilisateurController();
     $controller->inscription();  // Affiche le formulaire d'inscription
 });
 
@@ -95,12 +92,25 @@ $router->get('/connexion', function () {
 
 // Route POST pour soumettre le formulaire d'inscription
 $router->post('/inscription', function () {
-    $controller = new UtilisateurController();
+    $controller = new \Figurine\Controller\UtilisateurController();
     $controller->inscription();  // Traite l'inscription
 });
 
 
 $router->post('/inscription', 'UtilisateurController@inscription');
+
+
+$router->get('/article', function () {
+    $id = $_GET['id'] ?? null;
+
+    if (!$id) {
+        echo "Erreur : ID de l'article manquant.";
+        return;
+    }
+
+    $controller = new \Figurine\Controller\ArticleController();
+    $controller->afficherArticle($id);
+});
 
 
 var_dump($_POST);  // Vérifie que les données sont envoyées

@@ -18,7 +18,7 @@ if (isset($_SESSION['id_utilisateur'])) {
 <body>
     <h1>Connexion</h1>
     <!-- Formulaire de connexion -->
-    <form action="/Figurine/index.php?url=login" method="POST">
+    <form action="/web/Figurine/index.php?url=login" method="POST">
     <input type="email" name="mail" placeholder="Email" required>
     <input type="password" name="mdp" placeholder="Mot de passe" required>
     <button type="submit">Se connecter</button>

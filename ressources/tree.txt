@@ -1,0 +1,25 @@
+Figurine
+    |-- .env      // variables de configuration
+    |-- index.php         // point d'entrée 
+    |-- src               // application 
+    |     |-- form.php              // création et analyse du formulaire de saisie
+    |     |-- register.php          // connexion à la base et enregistrer des données 
+    |     |-- classes               // stockage des objets 
+    |     |       |-- form.php          // classe générateur de forme
+    |     |       |-- dbConnector.php   // classe abstraite (et singleton) de connexion à la base de données
+    |     |-- functions             // stockages des fonctions partagées
+    |             |-- messages.php  // fonctions d'affichage des messages (erreur et info)
+    |-- public 
+    |       |-- images 
+    |             |-- ...
+    |       |-- js 
+    |       |-- fonts 
+    |       |-- styles
+    |             |-- style.css
+    |-- vendor 
+    |       |-- autoload.php 
+    |       |-- composer 
+    |       |       |-- ... 
+    |       |-- ... 
+    |-- composer.json 
+    |-- composer.lock

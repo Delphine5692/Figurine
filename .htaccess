@@ -1,0 +1,9 @@
+# Interdire le listing des repertoires
+Options -Indexes
+
+# Réécriture d'URL
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

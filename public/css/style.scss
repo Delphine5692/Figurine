@@ -1,0 +1,2089 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+/* =====================================================================
+   FONTS & TYPOGRAPHIE
+===================================================================== */
+@font-face {
+    font-family: 'Mixone';
+    src: url('../fonts/MIXONE.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Henotica';
+    src: url('../fonts/Henotica.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =====================================================================
+   RESET & BASES
+===================================================================== */
+
+/* Suppression des puces pour toutes les listes */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Base de la page */
+body {
+    font-family: 'Calibri', sans-serif;
+    max-width: 1200px;
+    margin: auto;
+    background-color: #f4f4f4;
+}
+
+hr {
+    @include hr-styles;
+}
+
+/* =====================================================================
+   CONTAINERS & STRUCTURE
+===================================================================== */
+
+/* Container principal avec padding réintégré */
+.container {
+    padding: 20px;
+}
+
+.login {
+    margin-bottom: 40px;
+}
+
+/* =====================================================================
+   CARTES (CARDS) - PROFIL
+===================================================================== */
+
+/* Conteneur des cartes */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+/* Chaque carte */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    box-sizing: border-box;
+    flex: 1 1 calc(20% - 15px);
+    max-width: 300px;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 calc(50% - 15px);
+    }
+}
+
+/* =====================================================================
+   FLASH MESSAGES
+===================================================================== */
+
+#flash-container {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: #fff;
+    margin-bottom: 10px;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.flash-message.error {
+    background-color: #e74c3c;
+}
+
+.flash-message.success {
+    background-color: #2ecc71;
+}
+
+.flash-message.info {
+    background-color: #3498db;
+}
+
+/* =====================================================================
+   HEADER, FOOTER ET MAIN
+===================================================================== */
+
+.header-home {
+    padding: 20px;
+    height: 70px;
+    text-align: center;
+}
+
+footer {
+    background-color: #1C2C3C;
+    color: #f3f3f3;
+    text-align: center;
+    padding: 10px;
+    width: 100vw;
+    position: relative;
+    left: 49%;
+    transform: translateX(-50%);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* =====================================================================
+   NAVIGATION & MENU BURGER
+===================================================================== */
+
+.bi {
+    width: 24px;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $secondary-color;
+    }
+}
+
+// Fond transparent pour la barre de navigation sur la page d'accueil
+.home .nav-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+// Fond gris pour la barre de navigation sur toutes les autres pages
+.inner .nav-container {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: $primary-color;
+    z-index: 1000;
+    transition: all 0.3s ease;
+
+    a {
+        color: $white;
+    }
+
+    .logo {
+        img {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    .nav-title {
+        color: $white;
+    }
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.logo img {
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.nav-title {
+    font-family: 'Mixone';
+    margin-left: 10px;
+    text-align: start;
+    text-transform: uppercase;
+    line-height: 1;
+    font-size: 24px;
+    color: #333;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.nav-right {
+    padding-right: 30px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin-left: 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: $secondary-color;
+    }
+}
+
+.nav-container.scrolled .nav-menu li a {
+    color: #f3f3f3;
+    transition: color 0.3s ease;
+}
+
+.nav-container.scrolled .nav-left {
+    padding-top: 0;
+}
+
+.nav-container.scrolled .nav-title {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.nav-container.scrolled .logo img {
+    transform: scale(0.6);
+    filter: brightness(0) invert(1);
+}
+
+.nav-container.scrolled {
+    padding: 10px 0px;
+    height: 40px;
+    background-color: #1C2C3C !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+}
+
+.nav-container.scrolled::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 1);
+    pointer-events: none;
+}
+
+.burger-menu {
+    display: none; // Masqué par défaut
+}
+
+// Ajout pour la navigation burger en dessous de 768px
+@media screen and (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .burger-menu {
+        display: block;
+        border: none;
+        font-size: 1.8rem;
+        color: #333;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin-left: auto;
+        border-radius: 0px;
+    }
+
+    button:hover {
+        background-color: $primary-color !important;
+    }
+
+    .nav-container.open {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-container.open .nav-menu {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        position: absolute;
+        top: 76%;
+        right: 8px;
+        background-color: $primary-color;
+        color: $white;
+        padding: 10px 0;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-container.open .nav-menu li {
+        margin: 10px 20px;
+    }
+
+    .nav-container.open .nav-menu li a {
+        color: $white;
+    }
+
+}
+
+/* =====================================================================
+   INTRO SECTION - ACCUEIL
+===================================================================== */
+.intro-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .intro-text {
+        flex: 1;
+        padding: 30px;
+
+        h1 {
+            font-family: 'Mixone';
+            margin: 0 0 10px;
+            font-size: 3rem;
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+    }
+
+    .intro-image {
+        flex: 1;
+        text-align: right;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    }
+}
+
+/* =====================================================================
+   SECTION : NOS DERNIÈRES FIGURINES - ACCUEIL
+===================================================================== */
+
+.latest-figures-section {
+    h2 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 15px;
+    }
+
+    .figures-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 10px;
+
+        @media screen and (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .figure-card {
+        background-color: $white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .figure-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .figure-info {
+            padding: 10px;
+            flex-grow: 1;
+
+            h3 {
+                @include title-styles($font-size: 1.1rem, $color: $primary-color);
+                margin-bottom: 6px;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1.1rem;
+                font-weight: bold;
+                color: $secondary-color;
+                margin-bottom: 12px;
+            }
+
+            .btn-detail {
+                @include btn-styles($bg: $primary-color);
+                display: block;
+            }
+        }
+    }
+}
+
+/* =====================================================================
+   ZOOM SUR UN PRODUIT - ACCUEIL
+===================================================================== */
+
+.featured-container {
+    margin: 20px auto;
+    padding: 20px;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 15px;
+    }
+}
+
+.featured-product {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    padding: 15px;
+}
+
+// Image centrale
+.featured-image {
+    width: 100%;
+    text-align: center;
+
+    img {
+        @include card-styles;
+        max-width: 100%;
+    }
+}
+
+// Informations produit
+.featured-info {
+    width: 100%;
+    text-align: left;
+    margin-top: -15px;
+
+    h2 {
+        @include title-styles($font-size: 1.3rem, $color: $primary-color);
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .price {
+        color: $secondary-color;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .btn-card {
+        margin-bottom: 20px;
+    }
+
+    .featured-review {
+        @include card-styles;
+        background-color: $white;
+        padding: 10px 15px;
+        border-left: 4px solid $secondary-color;
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        blockquote {
+            font-style: italic;
+            color: #777;
+            margin: 10px 0;
+        }
+
+        .review-author {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 10px;
+        }
+    }
+}
+
+// Media query pour écrans moyens et larges (>=768px)
+@media screen and (min-width: 768px) {
+    .featured-product {
+        flex-direction: row;
+        align-items: stretch;
+        text-align: left;
+        padding: 0px;
+        gap: 30px;
+    }
+
+    .featured-image,
+    .featured-info {
+        flex: 1 1 300px;
+    }
+
+    .featured-image {
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .featured-info {
+        h2 {
+            @include title-styles($font-size: 1.5rem, $color: $primary-color);
+            text-align: left;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+}
+
+/* =====================================================================
+   SECTION : NOS DERNIERS ARTICLES
+===================================================================== */
+.latest-articles-section {
+    h2 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 15px;
+    }
+
+    .articles-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 10px;
+
+        @media screen and (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .article-card {
+        @include card-styles;
+        background-color: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-info {
+            padding: 10px;
+            flex-grow: 1;
+
+            h3 {
+                @include title-styles($font-size: 1.1rem, $color: $primary-color);
+                margin-bottom: 6px;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1rem;
+                color: #555;
+                margin-bottom: 12px;
+            }
+
+            .btn-detail {
+                @include btn-styles($bg: $primary-color);
+                display: block;
+            }
+        }
+    }
+}
+
+/* =====================================================================
+   AUTRES BOUTONS & COMPOSANTS DIVERS
+===================================================================== */
+
+.btn-primary,
+.nav-container.scrolled .btn-blue {
+    @include btn-styles($bg: $secondary-color);
+    display: block;
+    max-width: 300px;
+}
+
+.btn-blue {
+    @include btn-styles($bg: $primary-color);
+}
+
+.btn-login {
+    @include btn-styles($bg: $secondary-color);
+}
+
+.btn-card {
+    @include btn-styles($bg: $primary-color);
+    display: block;
+}
+
+.btn-list {
+    @include btn-styles($bg: $primary-color);
+    display: block;
+    width: auto;
+    padding: 8px 10px;
+}
+
+button {
+    @include btn-styles($bg: $primary-color);
+}
+
+/* =====================================================================
+   PANIER
+===================================================================== */
+
+.cart {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+    font-family: Arial, sans-serif;
+    color: #333;
+
+    .cart-header {
+        text-align: center;
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+    }
+
+    .cart-items {
+        /* Sur mobile, disposition en colonne */
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+
+        /* Exemple de style pour un item dans le panier */
+        .panier-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            h3 {
+                @include title-styles($font-size: 1.2rem, $color: $primary-color);
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 0.9rem;
+                margin: 5px 0;
+            }
+
+            strong {
+                font-size: 1.05rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+                color: #555;
+            }
+
+            input.quantite-input {
+                width: 80px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                margin: 5px 0;
+            }
+
+            button.remove-from-cart {
+                @include btn-styles($bg: $error-color, $hover-bg: $error-color-dark);
+                margin-top: 10px;
+                padding: 8px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    }
+
+    .cart-summary {
+        text-align: center;
+        margin-top: 20px;
+
+        #total-prix {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .btn-empty {
+                @include btn-styles($bg: $error-color, $hover-bg: $error-color-dark);
+                display: block;
+                max-width: 300px;
+            }
+
+            .btn-add {
+                @include btn-styles($bg: $success-color, $hover-bg: $success-color-dark);
+                display: block;
+                max-width: 300px;
+            }
+        }
+    }
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 768px) {
+    .cart {
+        .cart-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .cart-summary {
+            .cart-actions {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .cart {
+        .cart-items {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+/* =====================================================================
+   BACKGROUND DE LA PAGE D'ACCUEIL
+===================================================================== */
+
+.bloc-header {
+    background-image: url('../images/fondGris.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #bfbfbf;
+}
+
+/* =====================================================================
+   LISTE DES COMMANDES AVEC LISTES DES ARTICLES COMMANDÉS
+===================================================================== */
+
+// .article-miniature {
+//     background-color: white;
+//     border: 1px solid #ddd;
+//     padding: 10px;
+//     margin: 10px 0;
+//     display: inline-block;
+//     width: 300px;
+//     text-align: center;
+//     border-radius: 5px;
+// }
+
+// .article-miniature img {
+//     max-width: 100%;
+//     height: auto;
+// }
+
+// .article-detail {
+//     background-color: white;
+//     border: 1px solid #ddd;
+//     padding: 20px;
+//     margin: 20px;
+//     border-radius: 5px;
+// }
+
+// .article-detail img {
+//     max-width: 100%;
+//     height: auto;
+// }
+
+/* =====================================================================
+   LISTE DES PRODUITS (filtre par catégories) - BOUTIQUE
+===================================================================== */
+
+// Conteneur principal de la page produits
+.container-products {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 20px;
+    }
+
+    /* Formulaire de filtrage */
+    form {
+        margin-bottom: 20px;
+
+        label {
+            display: block;
+            font-size: 1rem;
+            color: $text-color;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+}
+
+/* Grille des produits */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+    @media screen and (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media screen and (min-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Style de chaque carte produit */
+.product-card {
+    @include card-styles;
+    background-color: $white;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: fit-content;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    figure {
+        margin: 0;
+
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    .card-text {
+        padding: 10px;
+        text-align: left;
+
+        h2 {
+            @include title-styles($font-size: 1.1rem, $color: $primary-color);
+            margin: 5px;
+            text-align: left;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: $secondary-color;
+            margin: 10px 4px;
+        }
+
+        .btn-list i {
+            font-size: 1.4rem;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+
+            .btn {
+                @include btn-styles($bg: #cfcfcf);
+                color: $text-color !important;
+                font-weight: bold;
+                width: 100%;
+
+                &:hover {
+                    color: $white !important;
+                }
+            }
+
+            .bi {
+                color: $white;
+
+                &:hover {
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+/* =====================================================================
+   DÉTAILS D'UN PRODUIT - BOUTIQUE
+===================================================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
+    h1 {
+        @include title-styles($font-size: 2.5rem, $color: $primary-color);
+        margin-bottom: 30px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        color: $text-color;
+        line-height: 1.6;
+    }
+}
+
+.product-detail {
+
+    /* Disposition en blocs pour le détail produit */
+    .product-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+
+        @media screen and (min-width: 768px) {
+            flex-direction: row;
+        }
+    }
+
+    /* Bloc galerie d'images */
+    .gallery-block {
+        flex: 1;
+
+        .main-image {
+            margin: 0px;
+
+            img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                border-radius: 8px;
+                border: 6px solid $white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            }
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+
+            .thumbnail {
+                width: 80px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: border-color 0.3s ease;
+            }
+        }
+    }
+
+    /* Bloc informations produit */
+    .info-block {
+        flex: 1;
+        padding-left: 20px;
+
+        .description,
+        .details {
+            margin-bottom: 20px;
+
+            h2 {
+                @include title-styles($font-size: 1.2rem, $color: $primary-color);
+                margin-bottom: 10px;
+                text-align: left;
+            }
+
+            p {
+                font-size: 1.1rem;
+                color: $text-color;
+            }
+        }
+
+        .purchase-info {
+            text-align: left;
+            margin-bottom: 20px;
+
+            .price {
+                font-size: 1.3rem;
+                color: $secondary-color;
+                margin-bottom: 10px;
+            }
+
+            button.add-to-cart {
+                max-width: 300px;
+                margin-left: 0;
+                display: block;
+            }
+        }
+    }
+}
+
+// Section avis
+.reviews {
+    margin-top: 30px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+    h2 {
+        @include title-styles($font-size: 1.5rem, $color: $primary-color);
+        margin-bottom: 20px;
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+
+        @media screen and (min-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .review {
+        @include card-styles;
+        background-color: $white;
+        padding: 15px;
+
+        .review-meta {
+            font-size: 0.95rem;
+            color: $text-color;
+            margin-bottom: 5px;
+
+            strong {
+                color: $secondary-color;
+            }
+        }
+
+        .review-content {
+            font-size: 1rem;
+            color: $text-color;
+            font-style: italic;
+        }
+    }
+
+    .review-form {
+        margin-top: 20px;
+
+        .form-group {
+            margin-bottom: 10px;
+
+            label {
+                display: block;
+                font-size: 1rem;
+                margin-bottom: 10px;
+                color: $text-color;
+            }
+
+            textarea {
+                @include card-styles;
+                width: 100%;
+                padding: 8px;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .login-note {
+        font-size: 1rem;
+        font-style: italic;
+        color: $text-color;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+/* =====================================================================
+   PROFIL UTILISATEUR - PROFIL
+===================================================================== */
+
+.profile {
+    padding: 20px;
+    background-color: #fff;
+    color: #333;
+    font-family: 'Calibri', sans-serif;
+
+    // Conteneur central
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .welcome-user {
+        margin: 20px auto;
+        padding: 15px 25px;
+        max-width: 600px;
+        font-size: 1.2rem;
+        font-family: 'Calibri', sans-serif;
+        color: #333;
+        text-align: center;
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+
+        &hover {
+            transform: scale(1.02);
+        }
+    }
+
+    article {
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            input,
+            textarea,
+            button {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .order-container,
+    .comment-container,
+    .review-container {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        justify-items: center;
+
+        @media screen and (min-width: 768px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .profile-orders ul li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+    .profile-orders ul li img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        padding-top: 10px;
+    }
+
+    .card {
+        width: 100%;
+        height: fit-content;
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 1px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        form {
+            margin-top: 10px;
+
+            button {
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #c82333;
+                }
+            }
+        }
+    }
+
+    // Section suppression du compte
+    &-delete {
+        text-align: left;
+        margin-top: 40px;
+
+        .card {
+            background-color: #ffe6e6;
+            border: 1px solid #ff4d4d;
+            padding: 20px;
+            text-align: center;
+
+            p {
+                margin-bottom: 20px;
+            }
+
+            button.btn-danger {
+                background-color: #ff4d4d;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #e60000;
+                }
+            }
+        }
+    }
+}
+
+/* =====================================================================
+   LISTES DES ARTICLES DE BLOG - BLOG
+===================================================================== */
+
+.articles {
+    padding: 20px;
+    color: #333;
+
+    &.container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .articles-grid {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr;
+
+        @media screen and (min-width: 600px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (min-width: 1024px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+.article-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    .article-figure {
+        margin: 0;
+        height: 200px;
+        overflow: hidden;
+
+        .article-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .article-content {
+        padding: 15px;
+
+        h2 {
+            @include title-styles($font-size: 1.3rem, $color: $primary-color);
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        p {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            @include btn-styles($bg: $primary-color);
+            display: inline-block;
+            padding: 10px 15px;
+        }
+    }
+}
+
+// Section vidéo tutoriel
+.tutorial {
+    padding: 0;
+    text-align: center;
+
+    h2 {
+        margin: 40px 0px;
+    }
+
+    .video-presentation,
+    .video-description {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto 1rem;
+    }
+
+    .video-presentation iframe {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+}
+
+/* =====================================================================
+   DÉTAIL D'UN ARTICLE DE BLOG - BLOG
+===================================================================== */
+
+.blog-detail {
+
+    .blog-header {
+        text-align: left;
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: #777;
+        }
+    }
+
+    .blog-figure {
+        margin: 0 auto;
+        width: 100%;
+
+        .blog-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    .blog-content {
+        margin: 20px 0;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .blog-comments {
+        margin-top: 30px;
+
+        .comments-header {
+            margin-bottom: 15px;
+            text-align: left;
+
+            h2 {
+                @include title-styles($font-size: 1.5rem, $color: $primary-color);
+            }
+        }
+
+        .blog-comment-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: 1fr;
+
+            @media screen and (min-width: 480px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @media screen and (min-width: 768px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .blog-comment-item {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 8px;
+                background-color: #fff;
+                padding: 15px;
+
+                .comment-meta {
+                    font-size: 0.95rem;
+                    color: #333;
+                    margin-bottom: 5px;
+
+                    strong {
+                        color: #ac7d14;
+                    }
+                }
+
+                .comment-body {
+                    font-size: 1rem;
+                    color: #333;
+
+                    p {
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+    }
+
+    .blog-comment-form {
+        margin-top: 20px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            label {
+                font-size: 1rem;
+                margin-bottom: 5px;
+                color: #333;
+            }
+
+            textarea {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 8px;
+                width: 100%;
+                padding: 8px;
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+/* =====================================================================
+   COLLECTIONS - ACCUEIL
+===================================================================== */
+
+.collections-section {
+    padding: 0 10px;
+    text-align: center;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+    }
+
+    h2 {
+        margin-bottom: 30px;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: lighter;
+        text-transform: uppercase;
+
+        strong {
+            color: $secondary-color;
+            font-weight: bold;
+        }
+    }
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @media screen and (min-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+// Carte de collection
+.collection-card {
+    @include card-styles;
+    background: #fff;
+    overflow: hidden;
+    text-align: left;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    h3 {
+        margin: 10px;
+        font-size: 1.2rem;
+        color: $primary-color;
+    }
+
+    p {
+        margin: 0 10px 10px;
+        font-size: 0.9rem;
+        color: $text-color;
+    }
+}
+
+/* =====================================================================
+   FORMULAIRE DE CONTACT - CONTACT
+===================================================================== */
+
+.contact-page {
+    padding: 20px;
+    text-align: center;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        input[type="email"],
+        textarea {
+            @include card-styles;
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            @include btn-styles($bg: $secondary-color);
+            margin-top: 20px;
+        }
+    }
+}
+
+/* =====================================================================
+   PANNEAU D'ADMINISTRATION - ADMIN
+===================================================================== */
+
+.admin-add-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 2rem;
+    padding: 20px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
+
+    .admin-add-product {
+        fieldset div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; // ou margin-right sur l'input pour espacer un peu le label
+        }
+    }
+}
+
+.admin-add-container>section {
+    @include card-styles;
+    flex: 1;
+    padding: 1rem;
+    color: $text-color;
+    background-color: #fff;
+    height: fit-content;
+}
+
+.admin-header {
+    color: #333;
+    padding: 1rem;
+    text-align: center;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+    }
+
+    .welcome-user {
+        margin: 20px auto;
+        padding: 15px 25px;
+        max-width: 600px;
+        font-size: 1.2rem;
+        font-family: 'Calibri', sans-serif;
+        color: #333;
+        text-align: center;
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+
+        &hover {
+            transform: scale(1.02);
+        }
+    }
+}
+
+section {
+    margin-bottom: 2rem;
+    padding: 20px;
+
+    h2 {
+        @include title-styles($font-size: 1.5rem, $color: $primary-color);
+    }
+}
+
+.admin-contact-messages p {
+    text-align: center;
+}
+
+.admin-contact-messages ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+        margin-bottom: 1rem;
+
+        p {
+            margin: 0.2rem 0;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 0.5rem 0;
+        }
+    }
+}
+
+form {
+    div {
+        margin-bottom: 1rem;
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            max-width: 97%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    fieldset {
+        margin-bottom: 1rem;
+
+        legend {
+            font-weight: bold;
+        }
+    }
+
+    button {
+        @include btn-styles($bg: $secondary-color);
+    }
+
+    .btn-supp {
+        @include btn-styles($bg: $error-color, $hover-bg: $error-color-dark);
+        padding: 5px 10px;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 0.5rem;
+        text-align: left;
+    }
+
+    th {
+        background-color: $secondary-color;
+        color: $white;
+    }
+}
+
+.admin-users {
+    table {
+        @include card-styles;
+    }
+
+    tbody {
+        background-color: $white;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-header nav .admin-nav li {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+}
+
+/* =====================================================================
+   A PROPOS - PRESENTATION
+===================================================================== */
+.about-us {
+    text-align: center;
+
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+        margin-bottom: 20px;
+    }
+}
+
+.about-extra {
+    .about-extra-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+      }
+  
+    .about-extra-image {
+      width: 100%;
+      max-width: 400px;
+      
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+    }
+  
+    .about-extra-text {
+      padding: 0 1rem;
+      text-align: left;
+    }
+  
+    @media (min-width: 768px) {
+      .about-extra-content {
+        flex-direction: row;
+        align-items: center;
+      }
+  
+      .about-extra-image,
+      .about-extra-text {
+        width: 50%;
+      }
+  
+      .about-extra-image {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+/* =====================================================================
+   PAGE DE CONNEXION - LOGIN
+===================================================================== */
+// Classe pour cacher visuellement un élément tout en le laissant accessible aux lecteurs d'écran
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .login-container {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: auto;
+  
+    header {
+      margin-bottom: 1.5rem;
+      
+      h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        color: #333;
+      }
+    }
+  
+    form.login {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      
+      input {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      .btn-login {
+        @include btn-styles($bg: $primary-color);
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .login-container {
+      padding: 2rem;
+      margin: auto;
+      
+      header {
+        h1 {
+            @include title-styles($font-size: 2rem, $color: $primary-color);
+        }
+      }
+      
+      form.login {
+        input {
+          font-size: 1.125rem;
+        }
+        
+        .btn-login {
+          font-size: 1.125rem;
+        }
+      }
+    }
+  }
+/* =====================================================================
+    PAGE DE CREATION DE COMPTE - INSCRIPTION
+===================================================================== */
+// Classe pour cacher visuellement un élément tout en le gardant accessible
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+//   .create-account-page {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     min-height: 100vh;
+//     background-color: #f8f9fa;
+//     padding: 1rem;
+//   }
+  
+  .account-container {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    margin: auto;
+  
+    header {
+      margin-bottom: 1.5rem;
+      h1 {
+        @include title-styles($font-size: 1.8rem, $color: $primary-color);
+        margin: 0;
+      }
+    }
+  
+    .account-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+  
+      input {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      .btn-submit {
+        @include btn-styles($bg: $primary-color);
+      }
+    }
+  }
+  
+  /* Media query pour écrans larges */
+  @media (min-width: 768px) {
+    .account-container {
+      max-width: 500px;
+      padding: 2rem;
+  
+      header {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+      
+      .account-form {
+        gap: 1.25rem;
+  
+        input {
+          font-size: 1.125rem;
+        }
+  
+        .btn-submit {
+          font-size: 1.125rem;
+        }
+      }
+    }
+  }
+/* =====================================================================
+   FIN DU FICHIER CSS
+===================================================================== */

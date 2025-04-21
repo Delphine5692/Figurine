@@ -1,0 +1,51 @@
+@use "variables" as *;
+
+// Boutons
+@mixin btn-styles($bg: $btn-bg, $hover-bg: $btn-bg-hover) {
+  background-color: $bg;
+  padding: $btn-padding;
+  border-radius: $btn-border-radius;
+  transition: background-color 0.3s ease;
+  color: $white !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $hover-bg !important;
+  }
+}
+
+// Centrer en flex
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Titres
+@mixin title-styles($font-size: 2rem, $color: $primary-color) {
+  font-family: $heading-font;
+  font-size: $font-size;
+  color: $color;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+// Barre de séparation
+@mixin hr-styles {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, $secondary-color, transparent);
+  margin: 30px 0;
+}
+
+// Carte blanche avec ombre
+@mixin card-styles {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+}

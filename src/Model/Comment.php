@@ -1,0 +1,175 @@
+<?php
+
+namespace Figurine\Model;
+
+use Figurine\Lib\DbConnector;
+use PDO;
+use PDOException;
+
+class Comment
+{
+    /**
+     * Ajoute un commentaire dans la base de données.
+     * @param string $msg_blog Le contenu du commentaire.
+     * @param int $id_article L'identifiant unique de l'article associé au commentaire.
+     * @param int $id_user L'identifiant unique de l'utilisateur qui ajoute le commentaire.
+     * @return bool Retourne true si le commentaire a été ajouté avec succès, sinon false.
+     */
+    public function addComment($msg_blog, $id_article, $id_user)
+    {
+        if (empty($msg_blog) || !is_numeric($id_article) || !is_numeric($id_user)) {
+            throw new \InvalidArgumentException('Données invalides pour ajouter un commentaire');
+        }
+
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->prepare("
+                INSERT INTO commentaire (msg_blog, id_article, id_utilisateur) 
+                VALUES (:msg_blog, :id_article, :id_user)
+            ");
+            return $stmt->execute([
+                'msg_blog' => $msg_blog,
+                'id_article' => $id_article,
+                'id_user' => $id_user
+            ]);
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans addComment : ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Récupère les commentaires associés à un article.
+     * @param int $id_article L'identifiant unique de l'article.
+     * @return array|null Retourne un tableau contenant les commentaires ou null en cas d'erreur.
+     */
+    public function getComments($id_article)
+    {
+        if (!is_numeric($id_article)) {
+            throw new \InvalidArgumentException('ID d\'article invalide pour récupérer les commentaires');
+        }
+
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->prepare("
+                SELECT c.msg_blog, c.date_commentaire, u.nom, u.prenom 
+                FROM commentaire c
+                JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+                WHERE c.id_article = :id_article AND u.statut = 'actif'
+                ORDER BY c.date_commentaire DESC
+            ");
+            $stmt->bindParam(':id_article', $id_article, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans getComments : ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Récupère les commentaires d'un utilisateur spécifique.
+     * @param int $id_user L'identifiant unique de l'utilisateur.
+     * @return array|null Retourne un tableau contenant les commentaires ou null en cas d'erreur.
+     */
+    public function getCommentsByUser($id_user)
+    {
+        if (!is_numeric($id_user)) {
+            throw new \InvalidArgumentException('ID utilisateur invalide pour récupérer les commentaires');
+        }
+
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->prepare("
+                SELECT c.id_commentaire, c.msg_blog, c.date_commentaire, a.titre 
+                FROM commentaire c
+                JOIN article a ON c.id_article = a.id_article
+                WHERE c.id_utilisateur = :id_user
+                ORDER BY c.date_commentaire DESC
+            ");
+            $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans getCommentsByUser : ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Vérifie si un utilisateur est le propriétaire d'un commentaire.
+     * @param int $id_commentaire L'identifiant unique du commentaire.
+     * @param int $id_user L'identifiant unique de l'utilisateur.
+     * @return bool Retourne true si l'utilisateur est le propriétaire, sinon false.
+     */
+    public function verifyCommentOwner($id_commentaire, $id_user)
+    {
+        if (!is_numeric($id_commentaire) || !is_numeric($id_user)) {
+            throw new \InvalidArgumentException('Données invalides pour vérifier le propriétaire du commentaire');
+        }
+
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->prepare("
+                SELECT 1 
+                FROM commentaire 
+                WHERE id_commentaire = :id_commentaire AND id_utilisateur = :id_user
+            ");
+            $stmt->execute([
+                'id_commentaire' => $id_commentaire,
+                'id_user' => $id_user
+            ]);
+
+            return $stmt->fetch() !== false;
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans verifyCommentOwner : ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Supprime un commentaire par son ID.
+     * @param int $id_commentaire L'identifiant unique du commentaire à supprimer.
+     * @return bool Retourne true si le commentaire a été supprimé avec succès, sinon false.
+     */
+    public function deleteComment($id_commentaire)
+    {
+        if (!is_numeric($id_commentaire)) {
+            throw new \InvalidArgumentException('ID commentaire invalide pour suppression');
+        }
+
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->prepare("DELETE FROM commentaire WHERE id_commentaire = :id_commentaire");
+            return $stmt->execute(['id_commentaire' => $id_commentaire]);
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans deleteComment : ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Récupère tous les commentaires.
+     * @return array|null Retourne un tableau contenant tous les commentaires ou null en cas d'erreur.
+     */
+    public function getAllComments()
+    {
+        try {
+            $pdo = DbConnector::dbConnect();
+            $stmt = $pdo->query("
+                SELECT c.id_commentaire, c.msg_blog, c.date_commentaire, u.nom AS utilisateur, a.titre AS article
+                FROM commentaire c
+                JOIN utilisateur u ON c.id_utilisateur = u.id_utilisateur
+                JOIN article a ON c.id_article = a.id_article
+                ORDER BY c.date_commentaire DESC
+            ");
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur de base de données dans getAllComments : ' . $e->getMessage());
+            return null;
+        }
+    }
+}

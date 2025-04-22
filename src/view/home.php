@@ -28,14 +28,14 @@ ob_start();
   <div class="figures-grid">
     <?php if (!empty($products)): ?>
       <?php foreach ($products as $product): ?>
-      <article class="figure-card">
-        <img class="figure-image" src="public/uploads/<?php echo $product['image_1']; ?>" alt="Figurine : <?php echo htmlspecialchars($product['nom']); ?>">
-        <div class="figure-info">
-          <h3><?php echo htmlspecialchars($product['nom']); ?></h3>
-          <p><?php echo number_format($product['prix'], 2, ',', ' '); ?> €</p>
-          <a href="product/<?php echo $product['id_produit']; ?>" class="btn-detail">Voir le détail</a>
-        </div>
-      </article>
+        <article class="figure-card">
+          <img class="figure-image" src="public/uploads/<?php echo $product['image_1']; ?>" alt="Figurine : <?php echo htmlspecialchars($product['nom']); ?>">
+          <div class="figure-info">
+            <h3><?php echo htmlspecialchars($product['nom']); ?></h3>
+            <p><?php echo number_format($product['prix'], 2, ',', ' '); ?> €</p>
+            <a href="product/<?php echo $product['id_produit']; ?>" class="btn-detail">Voir le détail</a>
+          </div>
+        </article>
       <?php endforeach; ?>
     <?php else: ?>
       <p>Aucun produit récent disponible.</p>
@@ -104,22 +104,7 @@ ob_start();
   <h1>Envie d'autre chose ?</h1>
   <h2>Découvrez le travail de <strong>"Belksasar"</strong></h2>
   <div class="collections-grid">
-    <?php if (isset($collections['total_count']) && $collections['total_count'] > 0 && !empty($collections['items'])): ?>
-      <?php foreach ($collections['items'] as $item): ?>
-        <div class="collection-card">
-          <a href="<?php echo htmlspecialchars($item['url']); ?>" target="_blank" rel="noopener noreferrer" onclick="return confirm('Attention, vous quittez Throne Of Miniatures');">
-            <?php
-            $imgUrl = isset($item['obj_img'][0]) ? $item['obj_img'][0] : 'public/images/default.png';
-            ?>
-            <img src="<?php echo htmlspecialchars($imgUrl); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
-            <h3><?php echo htmlspecialchars($item['name']); ?></h3>
-          </a>
-          <p>Créateur : <?php echo htmlspecialchars($item['owner']['name']); ?></p>
-        </div>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p>Aucune collection trouvée.</p>
-    <?php endif; ?>
+    <!-- Affichage des collections -->
   </div>
 </section>
 

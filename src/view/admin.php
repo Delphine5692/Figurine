@@ -9,25 +9,6 @@ ob_start();
     <p class="welcome-user">Bonjour, <?= htmlspecialchars($_SESSION['prenom']); ?> !</p>
 </header>
 
-<section class="admin-contact-messages" aria-labelledby="messages-title">
-    <h2 id="messages-title">Messages reçus</h2>
-    <?php if (!empty($messages)): ?>
-        <ul>
-            <?php foreach ($messages as $msg): ?>
-                <?php if (!isset($msg['email'])) continue; // On ignore les messages incomplets ?>
-                <li>
-                    <p><strong>Email :</strong> <?= htmlspecialchars($msg['email'] ?? ''); ?></p>
-                    <p><strong>Message :</strong><br><?= nl2br(htmlspecialchars($msg['message'] ?? '')); ?></p>
-                    <p><em><?= isset($msg['timestamp']) ? date("d/m/Y H:i", $msg['timestamp']) : ''; ?></em></p>
-                    <hr>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>Aucun message reçu.</p>
-    <?php endif; ?>
-</section>
-
 <hr>
 <div class="admin-add-container">
     <section class="admin-add-article" aria-labelledby="add-article-title">

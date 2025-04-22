@@ -3,6 +3,7 @@
 </footer>
 
 <script src="public/js/script.js"></script>
+<script src="public/js/collection.js"></script>
 
 <?php if (isset($includeAjouterPanierScript) && $includeAjouterPanierScript): ?>
     <script src="public/js/ajouterPanier.js"></script>

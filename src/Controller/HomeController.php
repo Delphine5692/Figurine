@@ -2,7 +2,6 @@
 
 namespace Figurine\Controller;
 
-use Figurine\Model\Collections;
 use Figurine\Model\Product;
 use Figurine\Model\Article;
 use Figurine\Model\Review;
@@ -16,22 +15,10 @@ class HomeController
     {
         $productModel = new Product();
         $articleModel = new Article();
-        $collectionsModel = new Collections();
 
         // Récupération des derniers produits et articles
         $products = $productModel->getLastFourProducts();
         $articles = $articleModel->getLastThreeArticles();
-
-        // Récupération des collections de "Créateur choisi"
-        $collectionsData = $collectionsModel->getCollectionsByCreator('belksasar3dprint');
-        $collections = [];
-        if ($collectionsData && isset($collectionsData['total_count']) && $collectionsData['total_count'] > 0) {
-            // On garde uniquement les 4 premiers items
-            if (isset($collectionsData['items'])) {
-                $collectionsData['items'] = array_slice($collectionsData['items'], 0, 4);
-            }
-            $collections = $collectionsData;
-        }
 
         // Produit mis en avant et son dernier avis
         $featuredProduct = Product::getFeaturedProduct();
@@ -54,7 +41,6 @@ class HomeController
         View::render('home', [
             'products'        => $products,
             'articles'        => $articles,
-            'collections'     => $collections,
             'featuredProduct' => $featuredProduct,
             'featuredReview'  => $featuredReview,
             'isHome'          => $isHome

@@ -35,17 +35,17 @@ ob_start();
 
   <section class="tutorial">
     <h2>Tutoriel de : OrigoWorld3D</h2>
-      <div class="video-presentation">
-        <iframe src="https://www.youtube.com/embed/sgUK_gED8kw?si=7LQL5CyI5aRFRrB_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-      <!-- 
+    <div class="video-presentation">
+      <iframe src="https://www.youtube.com/embed/sgUK_gED8kw?si=7LQL5CyI5aRFRrB_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <!-- 
         <video controls width="640" poster="vignette-aperçu.svg">
           <source src="public/videos/figurine.mp4" type="video/mp4">
           Votre navigateur ne supporte pas la vidéo HTML5.
         </video> 
     -->
-      <div class="video-description">
-        <p>Je te présente aujourd'hui le matériel idéal pour commencer la peinture de tes impressions 3D résine. Etant débutant et ayant récemment acheter un grand nombre de produits pour commencer la mise en peinture de mes figurines, je souhaitais te partager mon expérience en présentant les produits faciles à utiliser et qui m’ont grandement facilité la tâche pour mes premiers pas. J’espère que le résultat final de ma première mise en peinture sur cette figurine de Bayonetta 3 vous plaira. Bon visionnage !</p>
+    <div class="video-description">
+      <p>Je te présente aujourd'hui le matériel idéal pour commencer la peinture de tes impressions 3D résine. Etant débutant et ayant récemment acheter un grand nombre de produits pour commencer la mise en peinture de mes figurines, je souhaitais te partager mon expérience en présentant les produits faciles à utiliser et qui m’ont grandement facilité la tâche pour mes premiers pas. J’espère que le résultat final de ma première mise en peinture sur cette figurine de Bayonetta 3 vous plaira. Bon visionnage !</p>
     </div>
   </section>
 

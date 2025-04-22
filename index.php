@@ -97,13 +97,7 @@ $router->post('/admin/supprimer-produit', 'AdminController@supprimerProduit'); /
 
 $router->post('/article/ajouter-article', 'ArticleController@addArticle'); // Ajoute un article
 
-$router->get('/contact', 'ContactController@showContact');
-$router->post('/contact/send', 'ContactController@sendContact');
-$router->get('/contact/send', 'ContactController@sendContact');
-
 $router->get('/about-us', 'PageController@aboutUs');
-
-$router->get('/admin/contact-messages', 'AdminController@contactMessages');
 
 // Exécute le routeur
 $router->run();

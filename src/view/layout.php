@@ -8,6 +8,7 @@
     <title><?= isset($title) ? htmlspecialchars($title) : 'Figurine' ?></title>
     <base href="<?= FULL_URL_PATH ?>">
     <link rel="stylesheet" href="public/css/style.css">
+    <link rel="shortcut icon" type="image/png" href="public/images/logo.ico"/>
 </head>
 
 <body class="<?= isset($isHome) && $isHome ? 'home' : 'inner' ?>">

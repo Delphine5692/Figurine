@@ -2,7 +2,7 @@
 global $baseUrl;
 
 $title = "Mon Profil";
-$description = "Gérez votre compte, vos commandes, vos commentaires et vos avis sur Figurine.";
+$description = "Gérez votre compte, vos commandes, vos commentaires et vos avis sur Throne Of Miniature.";
 
 ob_start();
 ?>

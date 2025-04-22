@@ -10,10 +10,16 @@ class Comment
 {
     /**
      * Ajoute un commentaire dans la base de données.
+     *
+     * - Vérifie que le contenu du commentaire n'est pas vide et que les IDs article et utilisateur sont numériques.
+     * - Se connecte à la base via DbConnector.
+     * - Prépare et exécute une requête d'insertion.
+     *
      * @param string $msg_blog Le contenu du commentaire.
-     * @param int $id_article L'identifiant unique de l'article associé au commentaire.
+     * @param int $id_article L'identifiant unique de l'article associé.
      * @param int $id_user L'identifiant unique de l'utilisateur qui ajoute le commentaire.
-     * @return bool Retourne true si le commentaire a été ajouté avec succès, sinon false.
+     * @return bool Retourne true si le commentaire a été inséré avec succès, sinon false.
+     * @throws \InvalidArgumentException Si les données fournies sont invalides.
      */
     public function addComment($msg_blog, $id_article, $id_user)
     {
@@ -28,9 +34,9 @@ class Comment
                 VALUES (:msg_blog, :id_article, :id_user)
             ");
             return $stmt->execute([
-                'msg_blog' => $msg_blog,
-                'id_article' => $id_article,
-                'id_user' => $id_user
+                'msg_blog'    => $msg_blog,
+                'id_article'  => $id_article,
+                'id_user'     => $id_user
             ]);
         } catch (PDOException $e) {
             error_log('Erreur de base de données dans addComment : ' . $e->getMessage());
@@ -40,8 +46,15 @@ class Comment
 
     /**
      * Récupère les commentaires associés à un article.
+     *
+     * - Valide que l'ID de l'article est numérique.
+     * - Effectue une jointure entre les tables commentaire et utilisateur pour récupérer
+     *   les informations de l'auteur (nom et prénom) et filtre selon le statut 'actif'.
+     * - Trie les commentaires par date décroissante.
+     *
      * @param int $id_article L'identifiant unique de l'article.
-     * @return array|null Retourne un tableau contenant les commentaires ou null en cas d'erreur.
+     * @return array|null Un tableau de commentaires ou null en cas d'erreur.
+     * @throws \InvalidArgumentException Si l'ID de l'article n'est pas valide.
      */
     public function getComments($id_article)
     {
@@ -70,8 +83,15 @@ class Comment
 
     /**
      * Récupère les commentaires d'un utilisateur spécifique.
+     *
+     * - Valide que l'ID de l'utilisateur est numérique.
+     * - Joint les tables commentaire et article pour récupérer, en plus du contenu et de la date,
+     *   le titre de l'article associé.
+     * - Trie les résultats par date décroissante.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
-     * @return array|null Retourne un tableau contenant les commentaires ou null en cas d'erreur.
+     * @return array|null Un tableau de commentaires ou null en cas d'erreur.
+     * @throws \InvalidArgumentException Si l'ID utilisateur n'est pas valide.
      */
     public function getCommentsByUser($id_user)
     {
@@ -100,9 +120,14 @@ class Comment
 
     /**
      * Vérifie si un utilisateur est le propriétaire d'un commentaire.
-     * @param int $id_commentaire L'identifiant unique du commentaire.
-     * @param int $id_user L'identifiant unique de l'utilisateur.
+     *
+     * - Valide que les IDs du commentaire et de l'utilisateur sont numériques.
+     * - Exécute une requête qui retourne 1 si le commentaire appartient à l'utilisateur.
+     *
+     * @param int $id_commentaire L'identifiant du commentaire.
+     * @param int $id_user L'identifiant de l'utilisateur.
      * @return bool Retourne true si l'utilisateur est le propriétaire, sinon false.
+     * @throws \InvalidArgumentException Si les données fournies sont invalides.
      */
     public function verifyCommentOwner($id_commentaire, $id_user)
     {
@@ -119,7 +144,7 @@ class Comment
             ");
             $stmt->execute([
                 'id_commentaire' => $id_commentaire,
-                'id_user' => $id_user
+                'id_user'        => $id_user
             ]);
 
             return $stmt->fetch() !== false;
@@ -131,8 +156,13 @@ class Comment
 
     /**
      * Supprime un commentaire par son ID.
-     * @param int $id_commentaire L'identifiant unique du commentaire à supprimer.
-     * @return bool Retourne true si le commentaire a été supprimé avec succès, sinon false.
+     *
+     * - Valide que l'ID du commentaire est numérique.
+     * - Exécute une requête DELETE pour retirer le commentaire de la base.
+     *
+     * @param int $id_commentaire L'identifiant du commentaire à supprimer.
+     * @return bool Retourne true si la suppression est effectuée, sinon false.
+     * @throws \InvalidArgumentException Si l'ID du commentaire n'est pas valide.
      */
     public function deleteComment($id_commentaire)
     {
@@ -152,7 +182,12 @@ class Comment
 
     /**
      * Récupère tous les commentaires.
-     * @return array|null Retourne un tableau contenant tous les commentaires ou null en cas d'erreur.
+     *
+     * - Exécute une requête qui joint les tables commentaire, utilisateur et article afin
+     *   de récupérer pour chaque commentaire le nom de l'utilisateur et le titre de l'article associé.
+     * - Trie les commentaires par date décroissante.
+     *
+     * @return array|null Un tableau contenant tous les commentaires ou null en cas d'erreur.
      */
     public function getAllComments()
     {
@@ -173,3 +208,4 @@ class Comment
         }
     }
 }
+?>

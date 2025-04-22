@@ -8,8 +8,7 @@ use PDOException;
 
 class Product
 {
-
-    // Propriété pour la connexion à la base de données
+    // Propriété pour stocker l'instance PDO pour la connexion à la base.
     private $db;
 
     /**
@@ -20,10 +19,13 @@ class Product
         $this->db = DbConnector::dbConnect();
     }
 
-
     /**
      * Récupère tous les produits depuis la base de données.
-     * @return array|null Retourne un tableau contenant tous les produits ou null en cas d'erreur.
+     *
+     * Utilise une requête SQL pour sélectionner l'ensemble des produits présents dans la table "produit",
+     * triés par date de publication décroissante.
+     *
+     * @return array|null Retourne un tableau associatif contenant tous les produits ou null en cas d'erreur.
      */
     public static function getAllProducts()
     {
@@ -43,8 +45,13 @@ class Product
 
     /**
      * Récupère les derniers produits ajoutés.
+     *
+     * Cette méthode récupère une quantité limitée de produits récents par ordre décroissant de date
+     * de publication.
+     *
      * @param int $limit Le nombre maximum de produits à récupérer.
-     * @return array|null Retourne un tableau contenant les derniers produits ou null en cas d'erreur.
+     * @return array|null Retourne un tableau associatif des derniers produits ou null en cas d'erreur.
+     * @throws \InvalidArgumentException Si la valeur de $limit n'est pas un nombre positif.
      */
     public function getLastProducts($limit)
     {
@@ -67,8 +74,13 @@ class Product
 
     /**
      * Récupère un produit par son ID.
+     *
+     * Valide l'ID du produit puis exécute une requête préparée afin de récupérer
+     * les informations correspondantes depuis la table "produit".
+     *
      * @param int $id_produit L'identifiant unique du produit.
-     * @return array|null Retourne un tableau contenant les informations du produit ou null en cas d'erreur.
+     * @return array|null Retourne un tableau associatif avec les informations du produit ou null en cas d'erreur.
+     * @throws \InvalidArgumentException Si l'ID du produit n'est pas valide.
      */
     public function getProductById($id_produit)
     {
@@ -91,7 +103,10 @@ class Product
 
     /**
      * Récupère les quatre derniers produits ajoutés.
-     * @return array|null Retourne un tableau contenant les quatre derniers produits ou null en cas d'erreur.
+     *
+     * Exécute une requête pour récupérer les quatre produits les plus récents de la table "produit".
+     *
+     * @return array|null Retourne un tableau associatif contenant les quatre derniers produits ou null en cas d'erreur.
      */
     public static function getLastFourProducts()
     {
@@ -108,37 +123,43 @@ class Product
         }
     }
 
-
     /**
      * Ajoute un nouveau produit dans la base de données.
      *
-     * @param string $title Le nom du produit.
+     * Insère un produit dans la table "produit" en enregistrant le nom, la description, le prix,
+     * la taille, le nom du fichier de l'image et la date de publication (définie à NOW()).
+     *
+     * @param string $nom Le nom du produit.
      * @param string $description La description du produit.
-     * @param string $imagePath Le nom de fichier de l'image téléchargée.
-     * @return bool Retourne true si l'ajout est réussi, sinon false.
+     * @param string $prix Le prix du produit.
+     * @param string $taille La taille du produit.
+     * @param string $imagePath Le nom du fichier de l'image associée.
+     * @return bool|int Retourne l'ID du produit inséré en cas de succès, sinon false.
      */
-
-        public function addProduct($nom, $description, $prix, $taille, $imagePath)
-        {
-            try {
-                $stmt = $this->db->prepare("INSERT INTO produit (nom, description, prix, taille, image_1, date_produit) VALUES (?, ?, ?, ?, ?, NOW())");
-                if (!$stmt->execute([$nom, $description, $prix, $taille, $imagePath])) {
-                    $errorInfo = $stmt->errorInfo();
-                    error_log('Erreur dans addProduct: ' . implode(', ', $errorInfo));
-                    return false;
-                }
-                return $this->db->lastInsertId(); // Retourne l'ID du produit inséré
-            } catch (PDOException $e) {
-                error_log('Erreur dans addProduct: ' . $e->getMessage());
+    public function addProduct($nom, $description, $prix, $taille, $imagePath)
+    {
+        try {
+            $stmt = $this->db->prepare("INSERT INTO produit (nom, description, prix, taille, image_1, date_produit) VALUES (?, ?, ?, ?, ?, NOW())");
+            if (!$stmt->execute([$nom, $description, $prix, $taille, $imagePath])) {
+                $errorInfo = $stmt->errorInfo();
+                error_log('Erreur dans addProduct: ' . implode(', ', $errorInfo));
                 return false;
             }
+            return $this->db->lastInsertId(); // Retourne l'ID du produit inséré.
+        } catch (PDOException $e) {
+            error_log('Erreur dans addProduct: ' . $e->getMessage());
+            return false;
         }
-
+    }
 
     /**
      * Supprime un produit de la base de données.
-     * @param int $id_produit L'identifiant unique du produit à supprimer.
-     * @return bool Retourne true si la suppression est réussie, sinon false.
+     *
+     * Valide l'ID du produit puis exécute une requête de suppression dans la table "produit".
+     *
+     * @param int $id_product L'identifiant unique du produit à supprimer.
+     * @return bool Retourne true si la suppression est effectuée avec succès, sinon false.
+     * @throws \InvalidArgumentException Si l'ID du produit est invalide.
      */
     public function deleteProduct($id_product)
     {
@@ -155,57 +176,74 @@ class Product
         }
     }
 
-
+    /**
+     * Récupère le produit mis en avant.
+     *
+     * Retourne le produit possédant le plus grand nombre d'avis, déterminé par une jointure entre "produit" et "avis".
+     *
+     * @return array|null Retourne un tableau associatif représentant le produit mis en avant ou null en cas d'erreur.
+     */
     public static function getFeaturedProduct()
-{
-    try {
-        $db = DbConnector::dbConnect();
-        $query = "
-            SELECT p.*, COUNT(a.id_avis) AS review_count
-            FROM produit p
-            LEFT JOIN avis a ON p.id_produit = a.id_produit
-            GROUP BY p.id_produit
-            ORDER BY review_count DESC
-            LIMIT 1
-        ";
-        $stmt = $db->prepare($query);
-        $stmt->execute();
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
-    } catch (\PDOException $e) {
-        error_log('Erreur dans getFeaturedProduct: ' . $e->getMessage());
-        return null;
+    {
+        try {
+            $db = DbConnector::dbConnect();
+            $query = "
+                SELECT p.*, COUNT(a.id_avis) AS review_count
+                FROM produit p
+                LEFT JOIN avis a ON p.id_produit = a.id_produit
+                GROUP BY p.id_produit
+                ORDER BY review_count DESC
+                LIMIT 1
+            ";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log('Erreur dans getFeaturedProduct: ' . $e->getMessage());
+            return null;
+        }
     }
-}
 
-public static function getProductsByCategory($id_category)
-{
-    try {
-        $db = DbConnector::dbConnect();
-        // La sous-requête récupère les produits associés à la catégorie
-        $query = "
-            SELECT *
-            FROM produit
-            WHERE id_produit IN (
-                SELECT id_produit FROM produit_categorie WHERE id_categorie = ?
-            )
-            ORDER BY date_produit DESC
-        ";
-        $stmt = $db->prepare($query);
-        $stmt->execute([$id_category]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        error_log('Erreur dans getProductsByCategory: ' . $e->getMessage());
-        return [];
+    /**
+     * Récupère les produits appartenant à une catégorie donnée.
+     *
+     * Cette méthode utilise une sous-requête pour récupérer les produits associés à l'identifiant de la catégorie fourni,
+     * et les trie par date de publication décroissante.
+     *
+     * @param int $id_category L'identifiant de la catégorie.
+     * @return array Retourne un tableau associatif contenant les produits ou un tableau vide en cas d'erreur.
+     */
+    public static function getProductsByCategory($id_category)
+    {
+        try {
+            $db = DbConnector::dbConnect();
+            // La sous-requête récupère les produits associés à la catégorie
+            $query = "
+                SELECT *
+                FROM produit
+                WHERE id_produit IN (
+                    SELECT id_produit FROM produit_categorie WHERE id_categorie = ?
+                )
+                ORDER BY date_produit DESC
+            ";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$id_category]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log('Erreur dans getProductsByCategory: ' . $e->getMessage());
+            return [];
+        }
     }
-}
 
-
-/**
+    /**
      * Associe un produit à plusieurs catégories.
      *
-     * @param int $id_produit
-     * @param array $categories Tableau des id_categorie
-     * @return bool
+     * Pour chaque identifiant de catégorie contenu dans le tableau, insère une ligne dans la table de liaison "produit_categorie"
+     * qui associe le produit à la catégorie.
+     *
+     * @param int $id_product L'identifiant du produit.
+     * @param array $categories Tableau des identifiants de catégories.
+     * @return bool Retourne true en cas de succès, sinon false.
      */
     public function addCategoriesToProduct($id_product, array $categories)
     {
@@ -220,6 +258,5 @@ public static function getProductsByCategory($id_category)
             return false;
         }
     }
-
-
 }
+?>

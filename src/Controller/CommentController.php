@@ -3,9 +3,6 @@
 namespace Figurine\Controller;
 
 use Figurine\Model\Comment;
-use Figurine\Model\Order;
-use Figurine\Model\Article;
-use Figurine\Model\User;
 use Figurine\Lib\View;
 use Figurine\Lib\FlashMessage;
 
@@ -52,26 +49,6 @@ class CommentController
         // Affiche la vue contenant les commentaires.
         View::render('comment', ['comments' => $comments]);
     }
-
-    // /**
-    //  * Récupère à la fois l'article et ses commentaires.
-    //  *
-    //  * Permet de regrouper les informations liées à l'article et à ses commentaires.
-    //  *
-    //  * @param int $id_article L'identifiant de l'article.
-    //  * @return array Un tableau associatif contenant l'article et ses commentaires.
-    //  */
-    // private function getArticleAndComments(int $id_article): array
-    // {
-    //     $articleModel = new Article();
-    //     $article = $articleModel->getArticleById($id_article);
-    //     $comments  = $this->commentModel->getComments($id_article);
-
-    //     return [
-    //         'article' => $article,
-    //         'comments' => $comments
-    //     ];
-    // }
 
     /**
      * Ajoute un commentaire via le formulaire.

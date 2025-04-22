@@ -8,8 +8,14 @@ use PDOException;
 
 class User
 {
+    // Propriété pour stocker l'instance PDO utilisée pour les opérations sur la base.
     private $db;
 
+    /**
+     * Constructeur
+     *
+     * Initialise la connexion à la base de données en utilisant la classe DbConnector.
+     */
     public function __construct()
     {
         $this->db = DbConnector::dbConnect();
@@ -17,6 +23,10 @@ class User
 
     /**
      * Vérifie les informations de connexion d'un utilisateur.
+     *
+     * Exécute une requête préparée afin de récupérer les informations associées à l'email fourni.
+     * Vérifie ensuite le mot de passe en utilisant password_verify().
+     *
      * @param string $mail L'adresse email de l'utilisateur.
      * @param string $mdp Le mot de passe non haché de l'utilisateur.
      * @return array|bool Retourne les informations de l'utilisateur si la connexion est réussie, sinon false.
@@ -42,6 +52,9 @@ class User
 
     /**
      * Crée un nouvel utilisateur dans la base de données.
+     *
+     * Avant l'insertion, vérifie si l'adresse email est déjà utilisée.
+     *
      * @param string $nom Le nom de l'utilisateur.
      * @param string $prenom Le prénom de l'utilisateur.
      * @param string $mail L'adresse email de l'utilisateur.
@@ -51,26 +64,25 @@ class User
     public function createUser($nom, $prenom, $mail, $mdp_hache)
     {
         try {
-            // Vérifier si l'email existe déjà
+            // Vérifie si un utilisateur avec cet email existe déjà.
             $stmt = $this->db->prepare("SELECT * FROM utilisateur WHERE mail = ?");
             $stmt->execute([$mail]);
             $user = $stmt->fetch();
 
             if ($user) {
-                return false; // L'email existe déjà
+                return false; // L'email est déjà utilisée.
             }
 
-            // Insérer le nouvel utilisateur
+            // Insère le nouvel utilisateur dans la base de données.
             $stmt = $this->db->prepare("INSERT INTO utilisateur (nom, prenom, mail, mdp) VALUES (?, ?, ?, ?)");
-
             $stmt->execute([
-                ($nom),
-                ($prenom),
-                ($mail),
+                $nom,
+                $prenom,
+                $mail,
                 $mdp_hache
             ]);
 
-            return true; // Inscription réussie
+            return true; // Inscription réussie.
         } catch (PDOException $e) {
             error_log('Erreur de base de données dans createUser : ' . $e->getMessage());
             return false;
@@ -79,8 +91,13 @@ class User
 
     /**
      * Supprime un utilisateur.
+     *
+     * Cette méthode se charge de marquer l'utilisateur comme supprimé,
+     * puis de supprimer ses commentaires et enfin de le supprimer de la base.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
-     * @return bool Retourne true si l'utilisateur a été supprimé avec succès, sinon false.
+     * @return bool Retourne true si l'utilisateur est supprimé avec succès, sinon false.
+     * @throws \InvalidArgumentException Si l'ID utilisateur n'est pas un nombre.
      */
     public function deleteUser($id_user)
     {
@@ -89,15 +106,15 @@ class User
         }
 
         try {
-            // Marquer l'utilisateur comme "supprime"
+            // Marquer l'utilisateur comme "supprime".
             $stmt = $this->db->prepare("UPDATE utilisateur SET statut = 'supprime' WHERE id_utilisateur = ?");
             $stmt->execute([$id_user]);
 
-            // Supprime tous les commentaires associés à l'utilisateur
+            // Supprime tous les commentaires associés à cet utilisateur.
             $stmt = $this->db->prepare("DELETE FROM commentaire WHERE id_utilisateur = ?");
             $stmt->execute([$id_user]);
 
-            // Supprimer l'utilisateur de la base de données
+            // Supprime l'utilisateur de la base.
             $stmt = $this->db->prepare("DELETE FROM utilisateur WHERE id_utilisateur = ?");
             $result = $stmt->execute([$id_user]);
 
@@ -114,9 +131,14 @@ class User
 
     /**
      * Met à jour l'adresse d'un utilisateur.
+     *
+     * Vérifie que l'ID utilisateur est numérique et que l'adresse n'est pas vide,
+     * puis met à jour l'adresse dans la base.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
      * @param string $adress La nouvelle adresse de l'utilisateur.
-     * @return bool Retourne true si l'adresse a été mise à jour avec succès, sinon false.
+     * @return bool Retourne true si l'adresse a été mise à jour, sinon false.
+     * @throws \InvalidArgumentException Si les données d'entrée sont invalides.
      */
     public function updateAddress($id_user, $adress)
     {
@@ -136,8 +158,12 @@ class User
 
     /**
      * Récupère les informations d'un utilisateur par son ID.
+     *
+     * Exécute une requête préparée pour retourner l'utilisateur correspondant.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
-     * @return array|null Retourne un tableau contenant les informations de l'utilisateur ou null en cas d'erreur.
+     * @return array|null Retourne un tableau avec les informations de l'utilisateur ou null si une erreur se produit.
+     * @throws \InvalidArgumentException Si l'ID utilisateur est invalide.
      */
     public function getUserById($id_user)
     {
@@ -157,8 +183,12 @@ class User
 
     /**
      * Récupère le rôle d'un utilisateur.
+     *
+     * Exécute une requête pour obtenir la colonne "role" de l'utilisateur correspondant à l'ID.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
      * @return string|null Retourne le rôle de l'utilisateur ou null en cas d'erreur.
+     * @throws \InvalidArgumentException Si l'ID utilisateur est invalide.
      */
     public function getRole($id_user)
     {
@@ -178,9 +208,14 @@ class User
 
     /**
      * Modifie le rôle d'un utilisateur.
+     *
+     * Vérifie que le nouveau rôle fait partie des rôles autorisés (admin, user),
+     * puis met à jour la table utilisateur.
+     *
      * @param int $id_user L'identifiant unique de l'utilisateur.
      * @param string $role Le nouveau rôle à attribuer à l'utilisateur.
-     * @return bool Retourne true si le rôle a été modifié avec succès, sinon false.
+     * @return bool Retourne true si le rôle a été modifié, sinon false.
+     * @throws \InvalidArgumentException Si l'ID utilisateur ou le rôle est invalide.
      */
     public function modifierRole($id_user, $role)
     {
@@ -205,7 +240,11 @@ class User
 
     /**
      * Récupère tous les utilisateurs.
-     * @return array|null Retourne un tableau contenant tous les utilisateurs ou null en cas d'erreur.
+     *
+     * Exécute une requête SELECT pour obtenir les informations essentielles de chaque utilisateur.
+     * Assure qu'un statut est défini pour chaque utilisateur (valeur par défaut 'actif' si absent).
+     *
+     * @return array|null Retourne un tableau associatif contenant tous les utilisateurs ou null en cas d'erreur.
      */
     public function getAllUsers()
     {
@@ -213,7 +252,7 @@ class User
             $stmt = $this->db->query("SELECT id_utilisateur, nom, mail, role, statut FROM utilisateur");
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Parcourir chaque utilisateur et assigner des valeurs par défaut
+            // Parcourt chaque utilisateur afin d'assigner 'actif' comme statut par défaut si non défini.
             foreach ($users as &$user) {
                 if (!isset($user['statut'])) {
                     $user['statut'] = 'actif';
@@ -229,9 +268,14 @@ class User
 
     /**
      * Met à jour le statut d'un utilisateur.
+     *
+     * Vérifie que l'ID utilisateur est numérique et que le statut fourni est l'un des statuts autorisés ('actif', 'supprimer').
+     * Puis met à jour le statut dans la base.
+     *
      * @param int $userId L'identifiant unique de l'utilisateur.
      * @param string $statut Le nouveau statut à appliquer (actif ou supprimer).
-     * @return bool Retourne true si le statut a été mis à jour avec succès, sinon false.
+     * @return bool Retourne true si la mise à jour est réalisée avec succès, sinon false.
+     * @throws \InvalidArgumentException Si l'ID utilisateur ou le statut est invalide.
      */
     public function updateStatus($userId, $statut)
     {
@@ -256,7 +300,5 @@ class User
             return false;
         }
     }
-
-
-
 }
+?>

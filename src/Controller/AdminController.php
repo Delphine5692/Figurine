@@ -10,8 +10,6 @@ use Figurine\Model\Order;
 use Figurine\Lib\View;
 use Figurine\Lib\FlashMessage;
 use Figurine\Model\Category;
-use Figurine\Model\ContactMessage;
-
 
 class AdminController
 {
@@ -100,11 +98,5 @@ class AdminController
         FlashMessage::addMessage('error', 'Requête invalide.');
         header('Location: ' . BASE_URL . 'admin');
         exit;
-    }
-
-    public function contactMessages() {
-        $contactModel = new ContactMessage();
-        $messages = $contactModel->getMessages();
-        View::render('admin/contact_messages', ['messages' => $messages]);
     }
 }

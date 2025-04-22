@@ -297,10 +297,13 @@ main {
     cursor: pointer;
     padding: 10px 20px;
     margin-left: auto;
-    border-radius: 0px;
+    border-radius: 8px;
   }
-  button:hover {
-    background-color: #1C2C3C !important;
+  .burger-menu .bi {
+    color: #fff;
+  }
+  .burger-menu .bi:hover {
+    color: #fff;
   }
   .nav-container.open {
     flex-direction: row;

@@ -1,5 +1,6 @@
 <footer>
     <p>&copy; <?= date('Y'); ?> Mon Site. Tous droits réservés.</p>
+    <li><a href="legal-notices">Mentions Légales</a></li>
 </footer>
 
 <script src="public/js/script.js"></script>

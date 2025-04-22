@@ -2,6 +2,7 @@
 global $baseUrl;
 
 $title = "Liste des articles de blog";
+$description = "Découvrez nos derniers articles de blog sur l'impression 3D, la peinture de figurines et bien plus encore !";
 
 ob_start();
 ?>

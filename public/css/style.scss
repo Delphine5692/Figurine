@@ -23,6 +23,13 @@
 /* =====================================================================
    RESET & BASES
 ===================================================================== */
+/* Assurez-vous que html et body occupent toute la hauteur */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 /* Suppression des puces pour toutes les listes */
 ul {
@@ -36,6 +43,8 @@ body {
     max-width: 1200px;
     margin: auto;
     background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
 }
 
 hr {
@@ -142,7 +151,8 @@ footer {
 
 main {
     max-width: 1200px;
-    margin: auto;
+    margin-top: 50px;
+    flex: 1;
 }
 
 /* =====================================================================
@@ -1611,6 +1621,7 @@ button {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    padding: 16px;
 
     @media screen and (min-width: 768px) {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -2019,15 +2030,6 @@ table {
     border: 0;
 }
 
-//   .create-account-page {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     min-height: 100vh;
-//     background-color: #f8f9fa;
-//     padding: 1rem;
-//   }
-
 .account-container {
     width: 90%;
     max-width: 400px;
@@ -2087,6 +2089,132 @@ table {
             .btn-submit {
                 font-size: 1.125rem;
             }
+        }
+    }
+}
+
+/* =====================================================================
+   PAGE D'ERREUR 404
+===================================================================== */
+
+.error-content {
+    padding: 1rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.error-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.error-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.error-image {
+    max-width: 100%;
+    height: auto;
+    margin-top: 1.5rem;
+}
+
+/* Bouton */
+.btn {
+    @include btn-styles($bg: $secondary-color, $hover-bg: $success-color);
+}
+
+@media (min-width: 768px) {
+    .error-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .error-content p {
+        font-size: 1.125rem;
+    }
+
+    .btn {
+        font-size: 1.125rem;
+        padding: 1rem 2rem;
+    }
+}
+
+/* =====================================================================
+   PAGE DE MENTIONS LÉGALES
+===================================================================== */
+header {
+    h1 {
+        @include title-styles($font-size: 2rem, $color: $primary-color);
+    }
+}
+
+.legal-notices {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+
+    section {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+
+        &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        header {
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+                color: #2980b9;
+                border-bottom: 2px solid #ddd;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+    }
+
+    a {
+        color: #2980b9;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: darken(#2980b9, 10%);
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+    .legal-notices {
+        padding: 3rem;
+    }
+
+    .legal-notices section {
+        header {
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        p {
+            font-size: 1.125rem;
         }
     }
 }

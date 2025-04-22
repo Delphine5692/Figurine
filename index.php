@@ -22,6 +22,7 @@ define("FULL_URL_PATH",
     ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')? "https://": "http://").$_SERVER['HTTP_HOST'].URL_PATH
 );
 
+
 // Chemins internes au backend
 define ("SRC_DIR", __DIR__ . "/src");
 
@@ -42,7 +43,6 @@ else {
 
 // Création du router et enregistrement des routes
 $router = new Router($url, $queryParams);
-
 
 // Page d'accueil
 $router->get('/', 'HomeController@showHome');
@@ -97,7 +97,11 @@ $router->post('/admin/supprimer-produit', 'AdminController@supprimerProduit'); /
 
 $router->post('/article/ajouter-article', 'ArticleController@addArticle'); // Ajoute un article
 
+$router->get('/contact', 'PageController@showContact');
+
 $router->get('/about-us', 'PageController@aboutUs');
+
+$router->get('/legal-notices', 'PageController@legalNotices');
 
 // Exécute le routeur
 $router->run();

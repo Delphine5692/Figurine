@@ -1,5 +1,6 @@
 <?php
-$title = "À propos de moi";
+$title = "À propos de nous - Throne Of Miniatures";
+$description = "Découvrez l'univers de la peinture sur figurines, où chaque création est une œuvre d'art. Plongez dans ma passion pour la résine et le pinceau.";
 ob_start();
 ?>
 

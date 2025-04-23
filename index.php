@@ -1,10 +1,11 @@
 <?php
-// Démarrage de la session
 // Prolonger la durée de vie des sessions (par exemple, 10 jours en secondes)
-ini_set('session.gc_maxlifetime', 864000);
-session_set_cookie_params(864000);
+// ini_set('session.gc_maxlifetime', 864000);
+// session_set_cookie_params(864000);
 
+// Démarrage de la session
 if (session_status() === PHP_SESSION_NONE) {
+    session_name('figurine_session'); // Nom de la session
     session_start();
 }
 
@@ -97,11 +98,16 @@ $router->post('/admin/supprimer-produit', 'AdminController@supprimerProduit'); /
 
 $router->post('/article/ajouter-article', 'ArticleController@addArticle'); // Ajoute un article
 
+// Routes pour les pages statiques
 $router->get('/contact', 'PageController@showContact');
-
 $router->get('/about-us', 'PageController@aboutUs');
 
+// Routes pour les pages légales
 $router->get('/legal-notices', 'PageController@legalNotices');
+$router->get('/cgv', 'PageController@cgv');
+$router->get('/privacy-policy', 'PageController@privacyPolicy');
+$router->get('/returns', 'PageController@returns');
+$router->get('/faq', 'PageController@faq');
 
 // Exécute le routeur
 $router->run();

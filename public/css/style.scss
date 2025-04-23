@@ -127,7 +127,7 @@ hr {
 }
 
 /* =====================================================================
-   HEADER, FOOTER ET MAIN
+   HEADER ET MAIN
 ===================================================================== */
 
 .header-home {
@@ -136,22 +136,8 @@ hr {
     text-align: center;
 }
 
-footer {
-    background-color: #1C2C3C;
-    color: #f3f3f3;
-    text-align: center;
-    padding: 10px;
-    width: 100vw;
-    position: relative;
-    left: 49%;
-    transform: translateX(-50%);
-    margin: 0;
-    box-sizing: border-box;
-}
-
 main {
     max-width: 1200px;
-    margin-top: 50px;
     flex: 1;
 }
 
@@ -887,8 +873,8 @@ button {
 // Conteneur principal de la page produits
 .container-products {
     max-width: 1200px;
-    margin: 0 auto;
     padding: 20px;
+    margin: 50px auto 0;
 
     h1 {
         @include title-styles($font-size: 2rem, $color: $primary-color);
@@ -1372,6 +1358,7 @@ button {
         width: 90%;
         max-width: 1200px;
         margin: 0 auto;
+        margin-top: 3rem;
 
         h1 {
             font-size: 2rem;
@@ -2153,19 +2140,15 @@ header {
 }
 
 .legal-notices {
+    @include card-styles;
     background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
     padding: 2rem;
     margin: 2rem auto;
     max-width: 900px;
-    font-family: 'Helvetica Neue', Helvetica, sans-serif;
 
     section {
         margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #eee;
+        padding: 0;
 
         &:last-child {
             border-bottom: none;
@@ -2177,7 +2160,6 @@ header {
                 font-size: 1.8rem;
                 margin-bottom: 0.5rem;
                 color: #2980b9;
-                border-bottom: 2px solid #ddd;
                 padding-bottom: 0.5rem;
             }
         }
@@ -2218,6 +2200,212 @@ header {
         }
     }
 }
+
+/* =====================================================================
+   PAGES LÉGALES (Mentions Légales, CGV, Politique de Confidentialité, Retours)
+===================================================================== */
+
+.legal-notices,
+.cgv,
+.privacy-policy,
+.returns {
+    @include card-styles;
+    background-color: $white;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    max-width: 900px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin-left: 20px;
+    }
+
+    header {
+        h1 {
+            @include title-styles($font-size: 2rem);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            @include title-styles($font-size: 1.5rem, $color: $primary-color);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    }
+
+    section {
+        margin-bottom: 1.5rem;
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+            text-align: justify;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+
+    .legal-notices,
+    .cgv,
+    .privacy-policy,
+    .returns {
+        padding: 2rem;
+    }
+
+    .legal-notices header h1,
+    .cgv header h1,
+    .privacy-policy header h1,
+    .returns header h1 {
+        font-size: 2.5rem;
+    }
+
+    .legal-notices header h2,
+    .cgv header h2,
+    .privacy-policy header h2,
+    .returns header h2 {
+        font-size: 1.75rem;
+    }
+
+    .legal-notices section p,
+    .cgv section p,
+    .privacy-policy section p,
+    .returns section p {
+        font-size: 1.125rem;
+    }
+}
+
+/* =====================================================================
+   FOOTER
+===================================================================== */
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.footer-block {
+    text-align: center;
+    h3 {
+        @include title-styles($font-size: 1.2rem, $color: $white);
+        margin-bottom: 0.5rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin-bottom: 0.5rem;
+
+            a {
+                color: $light-text-color;
+                text-decoration: none;
+                transition: color 0.3s ease;
+
+                &:hover,
+                &:focus {
+                    color: #f3aa0b;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    padding: 1.5rem;
+    background-color: #1C2C3C;
+    box-sizing: border-box;
+    width: 100vw;
+    color: #f3f3f3;
+    position: relative;
+    left: 49%;
+    transform: translateX(-50%);
+    margin: 0;
+
+    p {
+        text-align: center;
+        font-size: 0.9rem;
+        color: $light-text-color;
+        margin-top: 2.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+        text-align: left;
+    }
+}
+
+/* =====================================================================
+   PAGE DE FAQ - FAQ
+===================================================================== */
+.faq {
+    @include card-styles;
+    background-color: $white;
+    margin: 1rem auto;
+    padding: 1.5rem;
+    max-width: 900px;
+  
+    header h1 {
+        @include title-styles($font-size: 2rem);
+    }
+  
+    .faq-category {
+      margin-bottom: 2rem;
+  
+      header h2 {
+        @include title-styles($font-size: 1.5rem, $color: $primary-color);
+      }
+  
+      .faq-item {
+        margin-bottom: 1rem;
+  
+        h3 {
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin-bottom: 0.5rem;
+        }
+  
+        p {
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .faq {
+      padding: 2rem;
+  
+      header h1 {
+        font-size: 2.5rem;
+      }
+  
+      .faq-category {
+        header h2 {
+          font-size: 1.75rem;
+        }
+  
+        .faq-item {
+          h3 {
+            font-size: 1.4rem;
+          }
+          p {
+            font-size: 1.125rem;
+          }
+        }
+      }
+    }
+  }
 
 /* =====================================================================
    FIN DU FICHIER CSS

@@ -46,11 +46,11 @@ composer install
 ### 3. Configuration de l’environnement
 Renommer le fichier `.env.exemple` en `.env` puis complètez-le avec vos identifiants :
 ```env
-DB_NAME=nom_de_la_base
-DB_HOST=localhost
-DB_PORT=3306
-DB_LOGIN=utilisateur
-DB_PASSWORD=mot_de_passe
+DB_NAME = nom_de_la_base
+DB_HOST = localhost
+DB_PORT = 3306
+DB_LOGIN = utilisateur
+DB_PASSWORD = mot_de_passe
 ```
 
 ### 4. Importer la base de données

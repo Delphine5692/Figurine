@@ -1,3 +1,7 @@
+/* =====================================================================
+   IMPORTATIONS DE FICHIERS SCSS
+===================================================================== */
+
 @use "variables" as *;
 @use "mixins" as *;
 
@@ -23,7 +27,6 @@
 /* =====================================================================
    RESET & BASES
 ===================================================================== */
-/* Assurez-vous que html et body occupent toute la hauteur */
 html,
 body {
     height: 100%;
@@ -31,13 +34,13 @@ body {
     padding: 0;
 }
 
-/* Suppression des puces pour toutes les listes */
+// Suppression du style par défaut des listes
 ul {
     list-style: none;
     padding-left: 0;
 }
 
-/* Base de la page */
+// Base de la page
 body {
     font-family: 'Calibri', sans-serif;
     max-width: 1200px;
@@ -47,6 +50,7 @@ body {
     flex-direction: column;
 }
 
+// Séparateur de sections
 hr {
     @include hr-styles;
 }
@@ -54,8 +58,7 @@ hr {
 /* =====================================================================
    CONTAINERS & STRUCTURE
 ===================================================================== */
-
-/* Container principal avec padding réintégré */
+// Container principal avec padding
 .container {
     padding: 20px;
 }
@@ -67,8 +70,7 @@ hr {
 /* =====================================================================
    CARTES (CARDS) - PROFIL
 ===================================================================== */
-
-/* Conteneur des cartes */
+// Conteneur principal pour les cartes
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -76,7 +78,7 @@ hr {
     justify-content: flex-start;
 }
 
-/* Chaque carte */
+// Carte individuelle
 .card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -96,7 +98,7 @@ hr {
 /* =====================================================================
    FLASH MESSAGES
 ===================================================================== */
-
+// Conteneur pour les messages flash
 #flash-container {
     position: fixed;
     top: 70px;
@@ -105,6 +107,7 @@ hr {
     z-index: 1000;
 }
 
+// Message flash individuel
 .flash-message {
     padding: 15px 20px;
     border-radius: 5px;
@@ -129,13 +132,14 @@ hr {
 /* =====================================================================
    HEADER ET MAIN
 ===================================================================== */
-
+// Header de la page d'accueil
 .header-home {
     padding: 20px;
     height: 70px;
     text-align: center;
 }
 
+// Conteneur principal de la page
 main {
     max-width: 1200px;
     flex: 1;
@@ -144,9 +148,9 @@ main {
 /* =====================================================================
    NAVIGATION & MENU BURGER
 ===================================================================== */
-
+// Icone SVG pour le menu burger
 .bi {
-    width: 24px;
+    width: 22px;
     transition: color 0.3s ease;
 
     &:hover {
@@ -170,7 +174,7 @@ main {
     transition: all 0.3s ease;
 }
 
-// Fond gris pour la barre de navigation sur toutes les autres pages
+// Fond coloré pour la barre de navigation sur les autres pages
 .inner .nav-container {
     margin: auto;
     display: flex;
@@ -183,6 +187,11 @@ main {
     background: $primary-color;
     z-index: 1000;
     transition: all 0.3s ease;
+
+    .btn-blue {
+        background-color: $secondary-color;
+        transition: all 0.3s ease;
+    }
 
     a {
         color: $white;
@@ -199,17 +208,20 @@ main {
     }
 }
 
+// Conteneur de la barre de navigation
 .nav-left {
     display: flex;
     align-items: center;
     padding-left: 10px;
 }
 
+// Logo de la barre de navigation
 .logo img {
     transform: scale(1);
     transition: transform 0.3s ease;
 }
 
+// Titre de la barre de navigation
 .nav-title {
     font-family: 'Mixone';
     margin-left: 10px;
@@ -251,6 +263,7 @@ main {
     }
 }
 
+// Barre de navigation scrolée
 .nav-container.scrolled .nav-menu li a {
     color: #f3f3f3;
     transition: color 0.3s ease;
@@ -270,6 +283,7 @@ main {
     filter: brightness(0) invert(1);
 }
 
+// Barre de navigation scrolée avec fond coloré
 .nav-container.scrolled {
     padding: 10px 0px;
     height: 40px;
@@ -283,6 +297,7 @@ main {
     margin: 0;
 }
 
+// Ombre portée pour la barre de navigation scrolée
 .nav-container.scrolled::after {
     content: "";
     position: absolute;
@@ -294,8 +309,9 @@ main {
     pointer-events: none;
 }
 
+// Masquer le menu burger par défaut
 .burger-menu {
-    display: none; // Masqué par défaut
+    display: none;
 }
 
 // Ajout pour la navigation burger en dessous de 768px
@@ -331,10 +347,10 @@ main {
     .nav-container.open .nav-menu {
         display: flex;
         flex-direction: column;
-        width: auto;
+        width: 100%;
         position: absolute;
-        top: 76%;
-        right: 8px;
+        top: 84%;
+        right: 0;
         background-color: $primary-color;
         color: $white;
         padding: 10px 0;
@@ -354,6 +370,7 @@ main {
 /* =====================================================================
    INTRO SECTION - ACCUEIL
 ===================================================================== */
+// Conteneur principal de la section d'introduction
 .intro-section {
     display: flex;
     flex-direction: column;
@@ -400,13 +417,14 @@ main {
 /* =====================================================================
    SECTION : NOS DERNIÈRES FIGURINES - ACCUEIL
 ===================================================================== */
-
+// Conteneur principal de la section des dernières figurines
 .latest-figures-section {
     h2 {
         @include title-styles($font-size: 2rem, $color: $primary-color);
         margin-bottom: 15px;
     }
 
+    // Grille des figurines
     .figures-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -422,6 +440,7 @@ main {
         }
     }
 
+    // Carte individuelle pour chaque figurine
     .figure-card {
         background-color: $white;
         border-radius: 8px;
@@ -470,7 +489,7 @@ main {
 /* =====================================================================
    ZOOM SUR UN PRODUIT - ACCUEIL
 ===================================================================== */
-
+// Conteneur principal de la section de zoom sur un produit
 .featured-container {
     margin: 20px auto;
     padding: 20px;
@@ -481,6 +500,7 @@ main {
     }
 }
 
+// Conteneur de la carte produit en vedette
 .featured-product {
     display: flex;
     flex-direction: column;
@@ -489,7 +509,7 @@ main {
     padding: 15px;
 }
 
-// Image centrale
+// Image du produit en vedette
 .featured-image {
     width: 100%;
     text-align: center;
@@ -500,7 +520,7 @@ main {
     }
 }
 
-// Informations produit
+// Informations du produit en vedette
 .featured-info {
     width: 100%;
     text-align: left;
@@ -554,7 +574,6 @@ main {
     }
 }
 
-// Media query pour écrans moyens et larges (>=768px)
 @media screen and (min-width: 768px) {
     .featured-product {
         flex-direction: row;
@@ -592,12 +611,14 @@ main {
 /* =====================================================================
    SECTION : NOS DERNIERS ARTICLES
 ===================================================================== */
+// Conteneur principal de la section des derniers articles
 .latest-articles-section {
     h2 {
         @include title-styles($font-size: 2rem, $color: $primary-color);
         margin-bottom: 15px;
     }
 
+    // Grille des articles
     .articles-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -613,6 +634,7 @@ main {
         }
     }
 
+    // Carte individuelle pour chaque article
     .article-card {
         @include card-styles;
         background-color: #fff;
@@ -632,6 +654,7 @@ main {
             object-fit: cover;
         }
 
+        // Informations de l'article
         .article-info {
             padding: 10px;
             flex-grow: 1;
@@ -659,7 +682,6 @@ main {
 /* =====================================================================
    AUTRES BOUTONS & COMPOSANTS DIVERS
 ===================================================================== */
-
 .btn-primary,
 .nav-container.scrolled .btn-blue {
     @include btn-styles($bg: $secondary-color);
@@ -694,7 +716,7 @@ button {
 /* =====================================================================
    PANIER
 ===================================================================== */
-
+// Conteneur principal du panier
 .cart {
     padding: 20px;
     background-color: #fff;
@@ -704,6 +726,7 @@ button {
     font-family: Arial, sans-serif;
     color: #333;
 
+    // En-tête du panier
     .cart-header {
         text-align: center;
         margin-bottom: 20px;
@@ -714,14 +737,14 @@ button {
         }
     }
 
+    // Liste des articles dans le panier
     .cart-items {
-        /* Sur mobile, disposition en colonne */
         display: flex;
         flex-direction: column;
         gap: 15px;
         margin-bottom: 20px;
 
-        /* Exemple de style pour un item dans le panier */
+        // Article individuel dans le panier
         .panier-item {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -765,10 +788,12 @@ button {
         }
     }
 
+    // Résumé du panier
     .cart-summary {
         text-align: center;
         margin-top: 20px;
 
+        // Total du panier
         #total-prix {
             font-size: 1.5rem;
             margin-bottom: 15px;
@@ -794,7 +819,6 @@ button {
     }
 }
 
-/* Responsive adjustments */
 @media screen and (min-width: 768px) {
     .cart {
         .cart-items {
@@ -824,7 +848,6 @@ button {
 /* =====================================================================
    BACKGROUND DE LA PAGE D'ACCUEIL
 ===================================================================== */
-
 .bloc-header {
     background-image: url('../images/fondGris.jpg');
     background-size: cover;
@@ -834,42 +857,8 @@ button {
 }
 
 /* =====================================================================
-   LISTE DES COMMANDES AVEC LISTES DES ARTICLES COMMANDÉS
-===================================================================== */
-
-// .article-miniature {
-//     background-color: white;
-//     border: 1px solid #ddd;
-//     padding: 10px;
-//     margin: 10px 0;
-//     display: inline-block;
-//     width: 300px;
-//     text-align: center;
-//     border-radius: 5px;
-// }
-
-// .article-miniature img {
-//     max-width: 100%;
-//     height: auto;
-// }
-
-// .article-detail {
-//     background-color: white;
-//     border: 1px solid #ddd;
-//     padding: 20px;
-//     margin: 20px;
-//     border-radius: 5px;
-// }
-
-// .article-detail img {
-//     max-width: 100%;
-//     height: auto;
-// }
-
-/* =====================================================================
    LISTE DES PRODUITS (filtre par catégories) - BOUTIQUE
 ===================================================================== */
-
 // Conteneur principal de la page produits
 .container-products {
     max-width: 1200px;
@@ -881,7 +870,7 @@ button {
         margin-bottom: 20px;
     }
 
-    /* Formulaire de filtrage */
+    // Filtre par catégories
     form {
         margin-bottom: 20px;
 
@@ -902,11 +891,12 @@ button {
     }
 }
 
-/* Grille des produits */
-.products-grid {
+// Grille des produits
+section.products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    padding: 0px;
 
     @media screen and (min-width: 768px) {
         grid-template-columns: repeat(3, 1fr);
@@ -917,7 +907,7 @@ button {
     }
 }
 
-/* Style de chaque carte produit */
+// Carte individuelle pour chaque produit
 .product-card {
     @include card-styles;
     background-color: $white;
@@ -941,6 +931,7 @@ button {
         }
     }
 
+    // Informations du produit
     .card-text {
         padding: 10px;
         text-align: left;
@@ -991,7 +982,6 @@ button {
 /* =====================================================================
    DÉTAILS D'UN PRODUIT - BOUTIQUE
 ===================================================================== */
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1009,9 +999,8 @@ button {
     }
 }
 
+// Conteneur principal de la page produit
 .product-detail {
-
-    /* Disposition en blocs pour le détail produit */
     .product-layout {
         display: flex;
         flex-direction: column;
@@ -1023,7 +1012,7 @@ button {
         }
     }
 
-    /* Bloc galerie d'images */
+    // Bloc d'images du produit
     .gallery-block {
         flex: 1;
 
@@ -1040,6 +1029,7 @@ button {
             }
         }
 
+        // Vignettes d'images
         .thumbnails {
             display: flex;
             gap: 10px;
@@ -1056,11 +1046,12 @@ button {
         }
     }
 
-    /* Bloc informations produit */
+    // Bloc d'informations du produit
     .info-block {
         flex: 1;
         padding-left: 20px;
 
+        // Titre et description du produit
         .description,
         .details {
             margin-bottom: 20px;
@@ -1077,6 +1068,7 @@ button {
             }
         }
 
+        // Informations de prix et d'achat
         .purchase-info {
             text-align: left;
             margin-bottom: 20px;
@@ -1108,6 +1100,7 @@ button {
         margin-bottom: 20px;
     }
 
+    // Grille des avis
     .reviews-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -1122,6 +1115,7 @@ button {
         }
     }
 
+    // Avis individuel
     .review {
         @include card-styles;
         background-color: $white;
@@ -1144,6 +1138,7 @@ button {
         }
     }
 
+    // Formulaire d'ajout d'avis
     .review-form {
         margin-top: 20px;
 
@@ -1178,20 +1173,21 @@ button {
 /* =====================================================================
    PROFIL UTILISATEUR - PROFIL
 ===================================================================== */
-
+// Conteneur principal de la page de profil
 .profile {
     padding: 20px;
     background-color: #fff;
     color: #333;
     font-family: 'Calibri', sans-serif;
 
-    // Conteneur central
+    // Conteneur de la carte de profil
     .container {
         width: 90%;
         max-width: 1200px;
         margin: 0 auto;
     }
 
+    // Message de bienvenue "utilisateur"
     .welcome-user {
         margin: 20px auto;
         padding: 15px 25px;
@@ -1210,6 +1206,7 @@ button {
         }
     }
 
+    // Informations de l'utilisateur
     article {
         margin-bottom: 30px;
         padding: 15px;
@@ -1227,6 +1224,7 @@ button {
             margin-bottom: 10px;
         }
 
+        // Formulaire de mise à jour des informations
         form {
             display: flex;
             flex-direction: column;
@@ -1243,6 +1241,7 @@ button {
         }
     }
 
+    // Liste des commandes, commentaires et avis
     .order-container,
     .comment-container,
     .review-container {
@@ -1260,6 +1259,7 @@ button {
         }
     }
 
+    // Liste des commandes
     .profile-orders ul li {
         display: flex;
         align-items: center;
@@ -1349,7 +1349,7 @@ button {
 /* =====================================================================
    LISTES DES ARTICLES DE BLOG - BLOG
 ===================================================================== */
-
+// Conteneur principal de la page d'articles
 .articles {
     padding: 20px;
     color: #333;
@@ -1366,6 +1366,7 @@ button {
         }
     }
 
+    // Grille des articles
     .articles-grid {
         display: grid;
         grid-gap: 20px;
@@ -1381,6 +1382,7 @@ button {
     }
 }
 
+// Carte individuelle pour chaque article
 .article-card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -1395,6 +1397,7 @@ button {
         transform: scale(1.02);
     }
 
+    // Image de l'article
     .article-figure {
         margin: 0;
         height: 200px;
@@ -1407,6 +1410,7 @@ button {
         }
     }
 
+    // Informations de l'article
     .article-content {
         padding: 15px;
 
@@ -1439,6 +1443,7 @@ button {
         margin: 40px 0px;
     }
 
+    // Conteneur de la vidéo
     .video-presentation,
     .video-description {
         width: 100%;
@@ -1456,9 +1461,7 @@ button {
 /* =====================================================================
    DÉTAIL D'UN ARTICLE DE BLOG - BLOG
 ===================================================================== */
-
 .blog-detail {
-
     .blog-header {
         text-align: left;
         margin-bottom: 20px;
@@ -1490,6 +1493,7 @@ button {
         }
     }
 
+    // Contenu de l'article
     .blog-content {
         margin: 20px 0;
         font-size: 1rem;
@@ -1581,7 +1585,7 @@ button {
 /* =====================================================================
    COLLECTIONS - ACCUEIL
 ===================================================================== */
-
+// Conteneur principal de la section collections
 .collections-section {
     padding: 0 10px;
     text-align: center;
@@ -1594,7 +1598,6 @@ button {
         margin-bottom: 30px;
         font-size: 1.2rem;
         color: #333;
-        font-weight: lighter;
         text-transform: uppercase;
 
         strong {
@@ -1604,6 +1607,7 @@ button {
     }
 }
 
+// Grille des collections
 .collections-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -1649,7 +1653,7 @@ button {
 /* =====================================================================
    FORMULAIRE DE CONTACT - CONTACT
 ===================================================================== */
-
+// Conteneur principal de la page de contact
 .contact-page {
     padding: 20px;
     text-align: center;
@@ -1665,6 +1669,7 @@ button {
         color: #555;
     }
 
+    // Carte de contact
     .contact-form {
         display: flex;
         flex-direction: column;
@@ -1698,7 +1703,7 @@ button {
 /* =====================================================================
    PANNEAU D'ADMINISTRATION - ADMIN
 ===================================================================== */
-
+// Conteneur principal de la page d'administration
 .admin-add-container {
     display: flex;
     flex-direction: column;
@@ -1714,7 +1719,7 @@ button {
         fieldset div {
             display: flex;
             align-items: center;
-            gap: 0.5rem; // ou margin-right sur l'input pour espacer un peu le label
+            gap: 0.5rem;
         }
     }
 }
@@ -1737,6 +1742,7 @@ button {
         @include title-styles($font-size: 2rem, $color: $primary-color);
     }
 
+    // Message de bienvenue "administrateur"
     .welcome-user {
         margin: 20px auto;
         padding: 15px 25px;
@@ -1788,6 +1794,7 @@ section {
     }
 }
 
+// Formulaire d'ajout de produit
 form {
     div {
         margin-bottom: 1rem;
@@ -1829,6 +1836,7 @@ form {
     }
 }
 
+// Liste des utilisateurs
 table {
     width: 100%;
     border-collapse: collapse;
@@ -1870,6 +1878,7 @@ table {
 /* =====================================================================
    A PROPOS - PRESENTATION
 ===================================================================== */
+// Conteneur principal de la page "À propos"
 .about-us {
     text-align: center;
 
@@ -1879,6 +1888,7 @@ table {
     }
 }
 
+// Section de présentation
 .about-extra {
     .about-extra-content {
         display: flex;
@@ -1927,7 +1937,7 @@ table {
 /* =====================================================================
    PAGE DE CONNEXION - LOGIN
 ===================================================================== */
-// Classe pour cacher visuellement un élément tout en le laissant accessible aux lecteurs d'écran
+// Classe pour cacher visuellement un élément tout en le gardant accessible
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -2054,7 +2064,6 @@ table {
     }
 }
 
-/* Media query pour écrans larges */
 @media (min-width: 768px) {
     .account-container {
         max-width: 500px;
@@ -2083,7 +2092,7 @@ table {
 /* =====================================================================
    PAGE D'ERREUR 404
 ===================================================================== */
-
+// Conteneur principal de la page d'erreur
 .error-content {
     padding: 1rem;
     text-align: center;
@@ -2091,28 +2100,28 @@ table {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-}
+    margin-top: 40px;
 
-.error-content h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
 
-.error-content p {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    color: #555;
-}
+    p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        color: #555;
+    }
 
-.error-image {
-    max-width: 100%;
-    height: auto;
-    margin-top: 1.5rem;
-}
+    .error-image {
+        max-width: 100%;
+        height: auto;
+        margin-top: 1.5rem;
+    }
 
-/* Bouton */
-.btn {
-    @include btn-styles($bg: $secondary-color, $hover-bg: $success-color);
+    .btn {
+        @include btn-styles($bg: $secondary-color, $hover-bg: $success-color);
+    }
 }
 
 @media (min-width: 768px) {
@@ -2182,7 +2191,6 @@ header {
     }
 }
 
-
 @media (min-width: 768px) {
     .legal-notices {
         padding: 3rem;
@@ -2204,7 +2212,6 @@ header {
 /* =====================================================================
    PAGES LÉGALES (Mentions Légales, CGV, Politique de Confidentialité, Retours)
 ===================================================================== */
-
 .legal-notices,
 .cgv,
 .privacy-policy,
@@ -2280,7 +2287,6 @@ header {
 /* =====================================================================
    FOOTER
 ===================================================================== */
-
 .footer-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2291,6 +2297,7 @@ header {
 
 .footer-block {
     text-align: center;
+
     h3 {
         @include title-styles($font-size: 1.2rem, $color: $white);
         margin-bottom: 0.5rem;
@@ -2353,59 +2360,60 @@ footer {
     margin: 1rem auto;
     padding: 1.5rem;
     max-width: 900px;
-  
+
     header h1 {
         @include title-styles($font-size: 2rem);
     }
-  
+
     .faq-category {
-      margin-bottom: 2rem;
-  
-      header h2 {
-        @include title-styles($font-size: 1.5rem, $color: $primary-color);
-      }
-  
-      .faq-item {
-        margin-bottom: 1rem;
-  
-        h3 {
-          font-size: 1.2rem;
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-        }
-  
-        p {
-          font-size: 1rem;
-          line-height: 1.6;
-        }
-      }
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .faq {
-      padding: 2rem;
-  
-      header h1 {
-        font-size: 2.5rem;
-      }
-  
-      .faq-category {
+        margin-bottom: 2rem;
+
         header h2 {
-          font-size: 1.75rem;
+            @include title-styles($font-size: 1.5rem, $color: $primary-color);
         }
-  
+
         .faq-item {
-          h3 {
-            font-size: 1.4rem;
-          }
-          p {
-            font-size: 1.125rem;
-          }
+            margin-bottom: 1rem;
+
+            h3 {
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
         }
-      }
     }
-  }
+}
+
+@media (min-width: 768px) {
+    .faq {
+        padding: 2rem;
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .faq-category {
+            header h2 {
+                font-size: 1.75rem;
+            }
+
+            .faq-item {
+                h3 {
+                    font-size: 1.4rem;
+                }
+
+                p {
+                    font-size: 1.125rem;
+                }
+            }
+        }
+    }
+}
 
 /* =====================================================================
    FIN DU FICHIER CSS

@@ -59,7 +59,7 @@ $router->get('/article/:id', 'ArticleController@showArticle');
 $router->post('/commentaire', 'CommentController@addComment');
 
 // Route pour afficher les commentaires d'un article spécifique
-$router->get('/article/:id/comments', 'CommentController@showComments');
+$router->get('/article/:id/comments', 'CommentController@showComments'); 
 
 // Routes pour la gestion des utilisateurs
 $router->get('/login', 'UserController@login'); // Affiche le formulaire de connexion
@@ -99,15 +99,15 @@ $router->post('/admin/supprimer-produit', 'AdminController@supprimerProduit'); /
 $router->post('/article/ajouter-article', 'ArticleController@addArticle'); // Ajoute un article
 
 // Routes pour les pages statiques
-$router->get('/contact', 'PageController@showContact');
-$router->get('/about-us', 'PageController@aboutUs');
+$router->get('/contact', 'PageController@showContact'); // Affiche la page de contact
+$router->get('/about-us', 'PageController@aboutUs'); // Affiche la page "À propos de nous"
 
 // Routes pour les pages légales
-$router->get('/legal-notices', 'PageController@legalNotices');
-$router->get('/cgv', 'PageController@cgv');
-$router->get('/privacy-policy', 'PageController@privacyPolicy');
-$router->get('/returns', 'PageController@returns');
-$router->get('/faq', 'PageController@faq');
+$router->get('/legal-notices', 'PageController@legalNotices'); // Affiche les mentions légales
+$router->get('/cgv', 'PageController@cgv'); // Affiche les conditions générales de vente
+$router->get('/privacy-policy', 'PageController@privacyPolicy'); // Affiche la politique de confidentialité
+$router->get('/returns', 'PageController@returns'); // Affiche la politique de retour
+$router->get('/faq', 'PageController@faq'); // Affiche la FAQ
 
 // Exécute le routeur
 $router->run();

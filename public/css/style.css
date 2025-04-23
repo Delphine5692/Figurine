@@ -1,5 +1,8 @@
 @charset "UTF-8";
 /* =====================================================================
+   IMPORTATIONS DE FICHIERS SCSS
+===================================================================== */
+/* =====================================================================
    FONTS & TYPOGRAPHIE
 ===================================================================== */
 @font-face {
@@ -19,7 +22,6 @@
 /* =====================================================================
    RESET & BASES
 ===================================================================== */
-/* Assurez-vous que html et body occupent toute la hauteur */
 html,
 body {
   height: 100%;
@@ -27,13 +29,11 @@ body {
   padding: 0;
 }
 
-/* Suppression des puces pour toutes les listes */
 ul {
   list-style: none;
   padding-left: 0;
 }
 
-/* Base de la page */
 body {
   font-family: "Calibri", sans-serif;
   max-width: 1200px;
@@ -53,7 +53,6 @@ hr {
 /* =====================================================================
    CONTAINERS & STRUCTURE
 ===================================================================== */
-/* Container principal avec padding réintégré */
 .container {
   padding: 20px;
 }
@@ -65,7 +64,6 @@ hr {
 /* =====================================================================
    CARTES (CARDS) - PROFIL
 ===================================================================== */
-/* Conteneur des cartes */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -73,7 +71,6 @@ hr {
   justify-content: flex-start;
 }
 
-/* Chaque carte */
 .card {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -139,7 +136,7 @@ main {
    NAVIGATION & MENU BURGER
 ===================================================================== */
 .bi {
-  width: 24px;
+  width: 22px;
   transition: color 0.3s ease;
 }
 .bi:hover {
@@ -172,6 +169,10 @@ main {
   right: 0;
   background: #1C2C3C;
   z-index: 1000;
+  transition: all 0.3s ease;
+}
+.inner .nav-container .btn-blue {
+  background-color: #ac7d14;
   transition: all 0.3s ease;
 }
 .inner .nav-container a {
@@ -309,10 +310,10 @@ main {
   .nav-container.open .nav-menu {
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: 100%;
     position: absolute;
-    top: 76%;
-    right: 8px;
+    top: 84%;
+    right: 0;
     background-color: #1C2C3C;
     color: #fff;
     padding: 10px 0;
@@ -779,12 +780,10 @@ button:hover {
   margin: 0;
 }
 .cart .cart-items {
-  /* Sur mobile, disposition en colonne */
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-bottom: 20px;
-  /* Exemple de style pour un item dans le panier */
 }
 .cart .cart-items .panier-item {
   background-color: #f9f9f9;
@@ -886,7 +885,6 @@ button:hover {
   background-color: #02642b !important;
 }
 
-/* Responsive adjustments */
 @media screen and (min-width: 768px) {
   .cart .cart-items {
     display: grid;
@@ -916,16 +914,12 @@ button:hover {
 }
 
 /* =====================================================================
-   LISTE DES COMMANDES AVEC LISTES DES ARTICLES COMMANDÉS
-===================================================================== */
-/* =====================================================================
    LISTE DES PRODUITS (filtre par catégories) - BOUTIQUE
 ===================================================================== */
 .container-products {
   max-width: 1200px;
   padding: 20px;
   margin: 50px auto 0;
-  /* Formulaire de filtrage */
 }
 .container-products h1 {
   font-family: "Mixone";
@@ -953,24 +947,23 @@ button:hover {
   border-radius: 4px;
 }
 
-/* Grille des produits */
-.products-grid {
+section.products-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  padding: 0px;
 }
 @media screen and (min-width: 768px) {
-  .products-grid {
+  section.products-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media screen and (min-width: 1024px) {
-  .products-grid {
+  section.products-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-/* Style de chaque carte produit */
 .product-card {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border: none;
@@ -1071,11 +1064,6 @@ button:hover {
   line-height: 1.6;
 }
 
-.product-detail {
-  /* Disposition en blocs pour le détail produit */
-  /* Bloc galerie d'images */
-  /* Bloc informations produit */
-}
 .product-detail .product-layout {
   display: flex;
   flex-direction: column;
@@ -1622,7 +1610,6 @@ button:hover {
   margin-bottom: 30px;
   font-size: 1.2rem;
   color: #333;
-  font-weight: lighter;
   text-transform: uppercase;
 }
 .collections-section h2 strong {
@@ -2117,7 +2104,6 @@ table th {
   background-color: #5E7D9C !important;
 }
 
-/* Media query pour écrans larges */
 @media (min-width: 768px) {
   .account-container {
     max-width: 500px;
@@ -2146,27 +2132,23 @@ table th {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  margin-top: 40px;
 }
-
 .error-content h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-
 .error-content p {
   font-size: 1rem;
   margin-bottom: 1.5rem;
   color: #555;
 }
-
-.error-image {
+.error-content .error-image {
   max-width: 100%;
   height: auto;
   margin-top: 1.5rem;
 }
-
-/* Bouton */
-.btn {
+.error-content .btn {
   background-color: #ac7d14;
   padding: 10px 20px;
   border-radius: 5px;
@@ -2178,7 +2160,7 @@ table th {
   border: none;
   cursor: pointer;
 }
-.btn:hover {
+.error-content .btn:hover {
   background-color: #2ecc71 !important;
 }
 

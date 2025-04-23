@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 20 avr. 2025 à 14:50
+-- Généré le : mer. 23 avr. 2025 à 15:56
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -80,7 +80,8 @@ INSERT INTO `avis` (`id_avis`, `msg_avis`, `date_avis`, `id_produit`, `id_utilis
 (23, 'Un petit format très stylé ! Je l’ai offert à un ami fan de pirates, il était ravi.', '2025-04-20 11:25:42', 23, 1),
 (24, 'Effrayant comme il faut ! Le sang en cascade est super bien pensé. Une pièce forte.', '2025-04-20 11:26:12', 26, 1),
 (25, 'Une touche d’humour macabre ! Ce squelette dans sa baignoire est à mourir de rire. Gros coup de cœur.', '2025-04-20 11:27:06', 32, 1),
-(26, 'Parfait pour mon univers elfique. Il a l’air de sortir tout droit d’un conte sombre.', '2025-04-20 11:27:45', 36, 1);
+(26, 'Parfait pour mon univers elfique. Il a l’air de sortir tout droit d’un conte sombre.', '2025-04-20 11:27:45', 36, 1),
+(27, 'Une pure merveille ! Les détails sont incroyables, surtout sur les ailes et l’armure. La peinture est vraiment soignée, on sent que c’est fait avec passion. Je l’ai posée sur mon étagère à côté de mes éditions collector, elle attire tout de suite le regard. Bravo', '2025-04-23 15:53:17', 35, 11);
 
 -- --------------------------------------------------------
 
@@ -121,7 +122,9 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`id_commande`, `date_commande`, `statut`, `id_utilisateur`) VALUES
-(20, '2025-04-20 14:25:47', 'en cours', 1);
+(20, '2025-04-20 14:25:47', 'en cours', 1),
+(21, '2025-04-23 08:53:08', 'en cours', 1),
+(22, '2025-04-23 15:54:52', 'en cours', 11);
 
 -- --------------------------------------------------------
 
@@ -147,7 +150,8 @@ INSERT INTO `commentaire` (`id_commentaire`, `msg_blog`, `date_commentaire`, `id
 (24, 'Le brossage à sec c’est magique ! Je suis débutant, et dès que j’ai testé cette technique, mes figurines ont pris une toute autre allure. Top article !', '2025-04-20 11:53:49', 31, 1),
 (25, 'Excellent article. Peut-être que tu pourrais ajouter un conseil sur le fait de ne pas acheter 200 figurines dès le début… on connaît tous ce piège', '2025-04-20 11:54:12', 33, 1),
 (26, 'Le coup du cure-dent pour les yeux, c’est vraiment malin ! J’avais jamais pensé à ça. Merci pour l’astuce.', '2025-04-20 11:54:30', 34, 1),
-(27, 'Le paragraphe sur le NMM m’a motivé à tenter enfin l’expérience ! Si tu fais un article dédié à ça, je suis preneur !', '2025-04-20 11:54:41', 34, 1);
+(27, 'Le paragraphe sur le NMM m’a motivé à tenter enfin l’expérience ! Si tu fais un article dédié à ça, je suis preneur !', '2025-04-20 11:54:41', 34, 1),
+(29, 'Super article ! Clair, précis, et bien écrit. J’ai enfin compris pourquoi mes pinceaux s’usaient si vite. Merci pour les recommandations, j’ai commandé un Raphael 8404 après lecture, hâte de tester. Un guide que je vais partager à mes potes peintres !', '2025-04-23 15:54:28', 33, 11);
 
 -- --------------------------------------------------------
 
@@ -244,7 +248,10 @@ CREATE TABLE `produit_commande` (
 --
 
 INSERT INTO `produit_commande` (`id_produit`, `id_commande`, `quantite`, `prix`) VALUES
-(36, 20, 1, 180.00);
+(24, 22, 1, 22.00),
+(31, 22, 1, 130.00),
+(36, 20, 1, 180.00),
+(36, 21, 1, 180.00);
 
 -- --------------------------------------------------------
 
@@ -269,10 +276,9 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `nom`, `prenom`, `mail`, `date_creation`, `mdp`, `adresse`, `role`, `statut`) VALUES
-(1, 'Marchisone', 'Delphine', 'delphine4492@gmail.com', '2025-04-11', '$2y$10$EB/ycZKYngyiZ4E3TXM4vO4m4ljp1yd/liQSGDXvLS7yaGpeBRB3O', 'Mon adresse test.\r\nHéhé, tu ne crois pas que tu vas savoir où j&#039;habite quand même ;)', 'admin', 'actif'),
-(3, 'Diego', 'Gogo', 'diego.gogo@email.com', '2025-04-12', '$2y$10$qelsY7P3OmA9g2t235v1UOJ2J7o2rOCHicSaGClfJd9Jyud8vZ0e2', 'Rue de la plage et du sable', '', 'supprimer'),
-(6, 'vert', 'actif', 'vert@email.com', '2025-04-13', '$2y$10$yruhNF20.1308l1cugG.xOD3wLkhE8Ty1qyX4V9PBCzTWldeRjWJu', NULL, 'utilisateur', 'supprimer'),
-(7, 'chips', 'fromage', 'chips.fromage@email.com', '2025-04-13', '$2y$10$Bjx1HlFRYV9V3Xg7q7yqiuqPz/0Dhyi8PEC0YUVtEXAzhkfNiV5Ea', NULL, 'utilisateur', 'supprimer');
+(1, 'Marchisone', 'Delphine', 'delphine4492@gmail.com', '2025-04-11', '$2y$10$EB/ycZKYngyiZ4E3TXM4vO4m4ljp1yd/liQSGDXvLS7yaGpeBRB3O', '666 rue de la Paix\r\n56 666 PARADIS', 'admin', 'actif'),
+(10, 'administrateur', 'admin', 'admin@figurine.com', '2025-04-23', '$2y$10$aHhs5B1LSBYzmGBXwatiFepsdiYyJCH4aM.8NrcOXy3ueXBLPELha', NULL, 'admin', 'actif'),
+(11, 'utilisateur', 'user', 'utilisateur@figurine.com', '2025-04-23', '$2y$10$wDhavDG2kNd7Qm7sT.IHFOeQ96u2NNBFZV6LFui1jKZ41FHbpkiK2', NULL, 'utilisateur', 'actif');
 
 --
 -- Index pour les tables déchargées
@@ -354,7 +360,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `avis`
 --
 ALTER TABLE `avis`
-  MODIFY `id_avis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_avis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT pour la table `categorie`
@@ -366,13 +372,13 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_commande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_commentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
@@ -384,7 +390,7 @@ ALTER TABLE `produit`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
